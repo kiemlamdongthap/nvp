@@ -1,0 +1,483 @@
+.khai-bao-container {
+  max-width: 100%;
+  color: #333; /* Màu chữ đậm */
+  margin-top: 0px; /* Khoảng cách trên tiêu đề */
+  margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
+  text-align: center; /* ✅ Canh giữa */
+  font-weight: bold;  /* ✅ In đậm */
+  font-size: 1.8rem;  /* Tăng kích thước cho nổi bật */
+}
+/* === CẬP NHẬT Ở ĐÂY === */
+/* Kiểu dáng cho tiêu đề 1 */ 
+.khai-bao-section read-only-section {
+  max-width: 100%;
+  display: grid;
+  color: #333; /* Màu chữ đậm */
+  margin-top: 550px; /* Khoảng cách dưới tiêu đề */
+  margin-bottom: 555px; /* Khoảng cách dưới tiêu đề */
+  text-align: center; /* ✅ Canh giữa */
+  font-weight: bold;  /* ✅ In đậm */
+  font-size: 1.8rem;  /* Tăng kích thước cho nổi bật */
+}
+.grid-khai-bao-form {
+  display: grid; /* Kích hoạt layout dạng lưới */
+  grid-template-columns: 1fr 1fr; /* Chia thành 2 cột với độ rộng bằng nhau */
+  gap: 1rem 2rem; /* Tạo khoảng cách giữa các ô (1rem cho hàng, 2rem cho cột) */
+  align-items: center; /* Căn chỉnh các mục bên trong cho thẳng hàng */
+}
+
+/* Đảm bảo tiêu đề và các nút bấm chiếm trọn chiều rộng của 2 cột */
+.grid-khai-bao-form > h3,
+.grid-khai-bao-form > .form-actions {
+  grid-column: 1 / -1; /* Trải dài từ cột 1 đến hết */
+}
+
+.khai-bao-section { /*Tiêu đề các Mục 1,2,3,4*/
+
+  color: #333; /* Màu chữ đậm */
+  margin-bottom: 10px; /* Khoảng cách dưới tiêu đề */
+  text-align: left; /* ✅ Canh giữa */
+  font-weight: bold;  /* ✅ In đậm */
+  font-size: 1.0rem;  /* Tăng kích thước cho nổi bật */
+}
+
+.form-group {
+  color: #333; /* Màu chữ đậm */
+  margin-bottom: 10px; /* Khoảng cách dưới tiêu đề */
+  text-align: left; /* ✅ Canh giữa */
+  font-weight: bold;  /* ✅ In đậm */
+  font-size: 1.0rem;  /* Tăng kích thước cho nổi bật */
+}
+.form-group label {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 0.95em;
+}
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.loading-message {
+  background-color: #e0f7fa;
+  color: #00796b;
+  border: 1px solid #b2ebf2;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.5s ease-out;
+}
+
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #555;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+
+
+
+.excel-upload-section {
+  background-color: #f8f9fa;
+  padding: 15px; /* Giảm padding để làm gọn hơn */
+  border-radius: 10px;
+  border: 1px dashed #a0a0a0;
+  margin-bottom: 20px; /* Giảm margin-bottom */
+  display: flex; /* Sử dụng flexbox để căn chỉnh nội dung */
+  flex-direction: column; /* Xếp các phần tử theo cột */
+  align-items: flex-start; /* Căn trái các phần tử */
+}
+
+.file-upload-group {
+  display: flex;
+  flex-direction: row; /* Thay đổi thành hàng để nút và tên file nằm cạnh nhau */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  gap: 10px; /* Khoảng cách giữa nút và tên file */
+  width: 100%; /* Đảm bảo nhóm chiếm toàn bộ chiều rộng */
+}
+
+.file-upload-label {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 0; /* Loại bỏ margin-bottom vì đã xếp hàng ngang */
+  flex-shrink: 0; /* Ngăn không cho nút co lại */
+}
+
+.file-upload-label:hover {
+  background-color: #218838;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-name {
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
+  white-space: nowrap; /* Ngăn tên file xuống hàng */
+  overflow: hidden; /* Ẩn phần tràn */
+  text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+  max-width: calc(100% - 150px); /* Giới hạn chiều rộng để không tràn ra ngoài nút */
+}
+
+.excel-preview-info {
+  margin-top: 15px; /* Giảm khoảng cách trên */
+  padding: 15px;
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+  width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+}
+
+.excel-preview-info p {
+  margin: 0;
+  color: #388e3c;
+  font-weight: 500;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 30px;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.bulk-upload-button {
+  background-color: #17a2b8;
+}
+
+.bulk-upload-button:hover:not(:disabled) {
+  background-color: #138496;
+}
+
+.clear-excel-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-excel-button:hover:not(:disabled) {
+  background-color: #c82333;
+}
+
+.clear-excel-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.note-text {
+  font-size: 0.85em;
+  color: #777;
+  margin-top: 15px;
+  line-height: 1.5;
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.section-divider {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  margin: 40px 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .khai-bao-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .excel-preview-info {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .excel-preview-info button {
+    width: 100%;
+  }
+}
+.section-title-clickable {
+  cursor: pointer;
+  user-select: none; /* Ngăn người dùng bôi đen chữ khi nhấp đúp */
+  transition: background-color 0.2s;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.section-title-clickable:hover {
+  background-color: #f0f0f0;
+}
+/* Container chứa các lựa chọn */
+.loai-co-so-options {
+  display: grid; /* Dùng grid để dễ dàng chia cột */
+  grid-template-columns:1fr 1fr 1fr 1fr; /* Mặc định là 2 cột */
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Kiểu cho mỗi nút lựa chọn */
+.option-button {
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600; /* Chữ đậm hơn */
+  font-size: 16px;
+  text-align: center;
+  color: #343a40;
+  
+  /* Hiệu ứng chuyển động mượt mà */
+  transition: all 0.2s ease-in-out; 
+}
+
+/* Hiệu ứng khi di chuột vào */
+.option-button:hover {
+  transform: translateY(-4px); /* Nâng nút lên một chút */
+  border-color: #007bff; /* Đổi màu viền */
+  color: #007bff; /* Đổi màu chữ */
+  box-shadow: 0 8px 15px rgba(0, 123, 255, 0.1); /* Đổ bóng xanh mờ */
+}
+
+/* CSS cho màn hình điện thoại (tự động chuyển về 1 cột) */
+@media (max-width: 768px) {
+  .loai-co-so-options {
+    grid-template-columns: 1fr; /* Hiển thị 1 cột */
+  }
+}
+.loai-co-so-options {
+  display: grid; /* Dùng grid để dễ dàng chia cột */
+  grid-template-columns:5fr 5fr 5fr 5fr; /* Mặc định là 2 cột */
+  gap: 15px;
+  margin-top: 10px;
+}
+/* Container cho các nút hành động ở cuối form */
+.form-actions {
+  display: grid; /* Dùng grid để dễ dàng chia cột */
+  grid-template-columns:5fr 5fr 5fr 5fr; /* Mặc định là 2 cột */
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Ghi đè màu sắc cho nút hành động chính (Đăng ký) */
+.option-button.action-primary {
+  background-color: #007bff; /* Màu xanh dương */
+  color: white;
+  border-color: #007bff;
+}
+.option-button.action-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+  color: white; /* Đảm bảo chữ vẫn trắng khi di chuột */
+}
+
+/* Ghi đè màu sắc cho nút hành động phụ (Đặt lại) */
+.option-button.action-secondary {
+  background-color: #6c757d; /* Màu xám */
+  color: white;
+  border-color: #6c757d;
+}
+.option-button.action-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+  color: white;
+}
+
+.react-confirm-alert-overlay { /* Vùng Thông báo xác nhận*/
+background: rgba(0, 0, 0, 0.6); /* Nền mờ hơn /
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000; / Đảm bảo hiển thị trên các phần tử khác */
+}
+
+.react-confirm-alert-overlay {
+  background: rgba(49, 49, 49, 0.8);
+}
+
+/* Khung chính của hộp thoại */
+.react-confirm-alert-body {
+  font-family: Arial, sans-serif;
+  width: 550px;
+  padding: 30px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-in-out; /* Hiệu ứng xuất hiện */
+}
+
+/* Tiêu đề "Xác nhận..." */
+.react-confirm-alert-body h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Nội dung thông báo */
+.react-confirm-alert-body .react-confirm-alert-message {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+/* Vùng chứa 2 nút, dùng flexbox để canh giữa */
+.react-confirm-alert-button-group {
+  display: flex;
+  justify-content: center; /* Canh giữa các nút theo chiều ngang */
+  gap: 215px; /* Khoảng cách giữa 2 nút */
+}
+
+/* Kiểu dáng chung cho các nút */
+.react-confirm-alert-button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s ease; /* Hiệu ứng chuyển động mượt mà */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hiệu ứng chung khi di chuột vào nút */
+.react-confirm-alert-button:hover {
+  transform: translateY(-2px); /* Nâng nút lên một chút */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Kiểu riêng cho nút "Có" (nút đầu tiên) */
+.react-confirm-alert-button:first-child {
+  background-color: #28a745; /* Màu xanh lá */
+}
+.react-confirm-alert-button:first-child:hover {
+  background-color: #218838;
+}
+
+/* Kiểu riêng cho nút "Không" (nút cuối cùng) */
+.react-confirm-alert-button:last-child {
+  background-color: #dc3545; /* Màu đỏ */
+}
+.react-confirm-alert-button:last-child:hover {
+  background-color: #c82333;
+}
+
+/* Hiệu ứng xuất hiện cho hộp thoại */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+} /* Kết thúc Vùng Thông báo xác nhận*/
+
+/* CSS cho lớp nền mờ phía sau */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CSS cho hộp thoại modal */
+.modal {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  min-width: 450px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1001;
+}

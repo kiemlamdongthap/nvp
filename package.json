@@ -2,7 +2,7 @@
   "name": "wildlife-frontend",
   "version": "1.0.0",
   "private": true,
-  "https://kiemlamdongthap.github.io/nvp/",
+  "homepage": "https://kiemlamdongthap.github.io/nvp/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.0.0",

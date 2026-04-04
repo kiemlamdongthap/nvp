@@ -16,7 +16,25 @@ function LoginPage() {
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+	useEffect(() => {
+        // Tạo thẻ script để tải widget từ GitHub của bạn
+        const script = document.createElement('script');
+        script.src = 'https://kiemlamdongthap.github.io/Chatbot/public/widget.js';
+        script.async = true;
 
+        // Chèn vào cuối body
+        document.body.appendChild(script);
+
+        // Hàm dọn dẹp: Xóa icon và frame khi người dùng chuyển sang trang khác (ví dụ vào Dashboard)
+        return () => {
+            document.body.removeChild(script);
+            // Tìm và xóa các phần tử mà widget.js đã tạo ra để tránh bị lặp icon
+            const launcher = document.getElementById('chatbot-launcher') || document.querySelector('div[style*="z-index: 2147483647"]');
+            const frame = document.getElementById('chatbot-frame') || document.querySelector('iframe[src*="Chatbot"]');
+            if (launcher) launcher.remove();
+            if (frame) frame.remove();
+        };
+    }, []);
     useEffect(() => {
         const savedEmail = localStorage.getItem('rememberedEmail');
         const savedPassword = localStorage.getItem('rememberedPassword');

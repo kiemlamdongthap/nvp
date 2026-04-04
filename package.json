@@ -25,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -r https://github.com/kiemlamdongthap/kiemlamdongthap/nvp.git -b gh-pages -d build"
+    "deploy": "gh-pages -r https://github.com/kiemlamdongthap/nvp.git -b gh-pages -d build"
   },
   "browserslist": {
     "production": [

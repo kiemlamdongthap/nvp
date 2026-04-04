@@ -1,5 +1,5 @@
 (function() {
-    // 1. Tạo Nút bấm nổi
+    // 1. Tạo Nút 👮
     const btn = document.createElement('div');
     btn.id = 'chatbot-launcher';
     btn.innerHTML = '👮';
@@ -13,7 +13,7 @@
     `);
     document.body.appendChild(btn);
 
-    // 2. Tạo Khung Iframe (Trỏ về repo Chatbot)
+    // 2. Tạo khung Chat
     const frame = document.createElement('iframe');
     frame.id = 'chatbot-frame';
     frame.src = 'https://kiemlamdongthap.github.io/Chatbot/';
@@ -25,7 +25,7 @@
     `);
     document.body.appendChild(frame);
 
-    // 3. Xử lý đóng/mở
+    // 3. Xử lý bấm nút
     let isOpen = false;
     btn.onclick = (e) => {
         e.stopPropagation();

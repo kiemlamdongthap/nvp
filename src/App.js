@@ -23,6 +23,18 @@ import UserListPage from './pages/UserListPage';
 import CustomerListPage from './pages/CustomerListPage';
 
 function App() {
+	// Thêm logic nhúng Widget Chatbot
+  useEffect(() => {
+    // Tạo script gọi từ repo nvp của bạn
+    const script = document.createElement('script');
+    script.src = 'https://kiemlamdongthap.github.io/nvp/public/widget.js';
+    script.async = true;
+
+    // Chèn vào body
+    document.body.appendChild(script);
+
+    // Không cần cleanup remove() nếu bạn muốn icon luôn hiện diện ở mọi trang
+  }, []);
   return (
     <div>
       <ToastContainer position="top-right" autoClose={4000} />

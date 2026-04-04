@@ -26,11 +26,10 @@ function App() {
 	// Thêm logic nhúng Widget Chatbot
   useEffect(() => {
     // Tạo script gọi từ repo nvp của bạn
-    const script = document.createElement('script');
-    script.src = 'https://kiemlamdongthap.github.io/nvp/public/widget.js';
+   const script = document.createElement('script');
+    // Thêm số phiên bản hoặc timestamp để xóa cache
+    script.src = `https://kiemlamdongthap.github.io/nvp/public/widget.js?v=${new Date().getTime()}`;
     script.async = true;
-
-    // Chèn vào body
     document.body.appendChild(script);
 
     // Không cần cleanup remove() nếu bạn muốn icon luôn hiện diện ở mọi trang

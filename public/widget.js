@@ -31,7 +31,7 @@
                 display: ${isOpen ? 'block' : 'none'}; /* Ẩn/Hiện dựa trên trạng thái đóng mở */
                 border-radius: 12px;        /* Bo góc khung chat cho mềm mại */
                 box-shadow: 0 15px 15px rgba(0,0,0,0.3); /* Tạo bóng đổ giúp khung nổi bật lên */
-                background: #fff;           /* Nền trắng cho khung chat */
+                background: transparent;           /* Nền trắng cho khung chat */
                 
                 /* Tỷ lệ kích thước so với màn hình */
                 width: 90vw;                /* Rộng bằng 90% chiều ngang màn hình */

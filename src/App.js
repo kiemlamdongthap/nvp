@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -23,14 +23,20 @@ import UserListPage from './pages/UserListPage';
 import CustomerListPage from './pages/CustomerListPage';
 
 function App() {
-	// Thêm logic nhúng Widget Chatbot
-  useEffect(() => {
-    const script = document.createElement('script');
-    // Khi deploy, file trong thư mục public sẽ nằm ở thư mục gốc /
-    script.src = '/widget.js?v=' + new Date().getTime(); 
-    script.async = true;
-    document.body.appendChild(script);
-}, []);
+// 1. Sửa lỗi đường dẫn nạp Widget Chatbot
+    useEffect(() => {
+        const script = document.createElement('script');
+        // Khi chạy trên GitHub Pages /nvp/, phải thêm tiền tố /nvp/ vào trước file tĩnh
+        script.src = '/nvp/widget.js?v=' + new Date().getTime(); 
+        script.async = true;
+        document.body.appendChild(script);
+        
+        return () => {
+            if (document.body.contains(script)) {
+                document.body.removeChild(script);
+            }
+        };
+    }, []);
   return (
     <div>
       <ToastContainer position="top-right" autoClose={4000} />

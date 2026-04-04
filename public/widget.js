@@ -30,7 +30,7 @@
                 border: none;               /* Loại bỏ viền mặc định của iframe */
                 display: ${isOpen ? 'block' : 'none'}; /* Ẩn/Hiện dựa trên trạng thái đóng mở */
                 border-radius: 12px;        /* Bo góc khung chat cho mềm mại */
-                box-shadow: 0 15px 15px rgba(0,0,0,0.3); /* Tạo bóng đổ giúp khung nổi bật lên */
+                box-shadow: none; /* Tạo bóng đổ giúp khung nổi bật lên */
                 background: transparent;           /* Nền trắng cho khung chat */
                 
                 /* Tỷ lệ kích thước so với màn hình */
@@ -39,7 +39,7 @@
                 max-width: 1500px;          /* Không cho phép rộng quá 1500px trên màn hình cực lớn */
                 
                 /* Kỹ thuật căn giữa tuyệt đối chuẩn xác */
-                top: 50%;                   /* Đẩy mép trên xuống giữa màn hình (50%) */
+                top: 60%;                   /* Đẩy mép trên xuống giữa màn hình (50%) */
                 left: 50%;                  /* Đẩy mép trái sang giữa màn hình (50%) */
                 transform: translate(-50%, -50%); /* Dịch ngược lại một nửa kích thước của chính nó để vào tâm */
                 

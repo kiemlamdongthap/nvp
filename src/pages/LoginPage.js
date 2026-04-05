@@ -75,7 +75,7 @@ function LoginPage() {
                     <img src={logoKiemLam} alt="Logo Chi cục Kiểm Lâm" className="header-logo" />
                     <div className="header-text">
                         <h1>CHI CỤC KIỂM LÂM TỈNH ĐỒNG THÁP</h1>
-                        <h2>QUẢN LÝ LÂM SẢN</h2>
+                        <h2>HỆ THỐNG QUẢN LÝ DỮ LIỆU</h2>
                         <h3 translate="no">Software copyright: Nguyen Van Phuc &copy;Ver 2025 1.0.0&copy;</h3>
                     </div>
                 </div>

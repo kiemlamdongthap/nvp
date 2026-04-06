@@ -20,6 +20,8 @@ git commit -m "Triển khai hệ thống Chatbot Lâm sản 2026"
 
 # 3. Tạo nhánh gh-pages (nhánh chuyên dùng để chạy trang web)
 git checkout -b gh-pages
+# 4. Đẩy lên nhánh gh
+git push origin gh-pages
 ----
 Thêm một thành phần.
 1. // src/components/Sidebar.js

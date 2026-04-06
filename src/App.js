@@ -23,23 +23,6 @@ import UserListPage from './pages/UserListPage';
 import CustomerListPage from './pages/CustomerListPage';
 
 function App() {
-// 1. Sửa lỗi đường dẫn nạp Widget Chatbot
-    useEffect(() => {
-    if (document.getElementById('chatbot-widget')) return;
-
-    const script = document.createElement('script');
-    script.id = 'chatbot-widget';
-
-    script.src = `${process.env.PUBLIC_URL}/widget.js?v=${Date.now()}`;
-    script.async = true;
-
-    document.body.appendChild(script);
-
-    return () => {
-        const existing = document.getElementById('chatbot-widget');
-        if (existing) existing.remove();
-    };
-}, []);
   return (
     <div>
       <ToastContainer position="top-right" autoClose={4000} />

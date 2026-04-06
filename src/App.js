@@ -23,6 +23,28 @@ import UserListPage from './pages/UserListPage';
 import CustomerListPage from './pages/CustomerListPage';
 
 function App() {
+	// === Tích hợp Icon Chatbot Nhịp tim đỏ ===
+  useEffect(() => {
+    const scriptId = 'chatbot-widget-script';
+    
+    // Kiểm tra nếu chưa có script thì mới thêm vào
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script');
+      script.id = scriptId;
+      // Thêm timestamp để ép trình duyệt cập nhật bản mới nhất có hiệu ứng nhịp tim
+      script.src = `https://kiemlamdongthap.github.io/nvp/public/widget.js?v=${new Date().getTime()}`;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    // Dọn dẹp icon khi component bị gỡ bỏ (tránh lặp icon)
+    return () => {
+      const oldScript = document.getElementById(scriptId);
+      if (oldScript) oldScript.remove();
+      const launcher = document.getElementById('chatbot-launcher');
+      if (launcher) launcher.remove();
+    };
+  }, []);
   return (
     <div>
       <ToastContainer position="top-right" autoClose={4000} />

@@ -32,7 +32,7 @@ function App() {
       const script = document.createElement('script');
       script.id = scriptId;
       // Thêm timestamp để ép trình duyệt cập nhật bản mới nhất có hiệu ứng nhịp tim
-      script.src = `https://kiemlamdongthap.github.io/nvp/public/widget.js?v=${new Date().getTime()}`;
+      script.src = `https://kiemlamdongthap.github.io/nvp/widget.js?v=${new Date().getTime()}`;
       script.async = true;
       document.body.appendChild(script);
     }

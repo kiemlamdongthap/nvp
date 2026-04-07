@@ -156,14 +156,89 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
 				</li>
             </ul>
           </li>
+		{/* Các loại Bản đồ */}
+<li className="sidebar-item">
+  <div
+    className={`summary ${openMenu === "report" ? "open" : ""}`}
+    onClick={() => toggleMenu("report")}
+  >
+    <FontAwesomeIcon icon={faChartBar} />
+    <span className="menu-text">Bản đồ số hóa</span>
+    <FontAwesomeIcon
+      icon={openMenu === "report" ? faChevronDown : faChevronRight}
+      className="arrow-icon"
+    />
+  </div>
 
-          {/* Google Maps */}
-          <li>
-            <NavLink to="/google-maps" className={({ isActive }) => (isActive ? "active" : "")}>
-              <FontAwesomeIcon icon={faMapMarkedAlt} />
-              <span className="menu-text">Điều hướng bản đồ</span>
-            </NavLink>
-          </li>
+  {/* Sub menu */}
+  <ul className={`submenu ${openMenu === "report" ? "show" : ""}`}>
+    <li>
+      <NavLink
+        to="/google-maps"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Bản đồ Lâm sản</span>
+      </NavLink>
+    </li>
+
+    <li>
+      <NavLink
+        to="/bandolamnghiep"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Bản đồ Lâm nghiệp</span>
+      </NavLink>
+    </li>
+  </ul>
+</li>
+		{/* Các loại Văn bản */}
+<li className="sidebar-item">
+  <div
+    className={`summary ${openMenu === "report" ? "open" : ""}`}
+    onClick={() => toggleMenu("report")}
+  >
+    <FontAwesomeIcon icon={faChartBar} />
+    <span className="menu-text">Văn bản Lâm nghiệp</span>
+    <FontAwesomeIcon
+      icon={openMenu === "report" ? faChevronDown : faChevronRight}
+      className="arrow-icon"
+    />
+  </div>
+
+  {/* Sub menu */}
+  <ul className={`submenu ${openMenu === "report" ? "show" : ""}`}>
+    <li>
+      <NavLink
+        to="/google-maps"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Quy phạm phạm luật</span>
+      </NavLink>
+    </li>
+
+    <li>
+      <NavLink
+        to="/Vanban"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Quy chuẩn, kỹ thuật</span>
+      </NavLink>
+    </li>
+	 <li>
+      <NavLink
+        to="/Vanban"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Vi phạm hành chính</span>
+      </NavLink>
+    </li>
+  </ul>
+</li>
 
           {/* Admin */}
           {role === "admin" && (

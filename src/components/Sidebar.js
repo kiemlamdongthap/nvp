@@ -1,7 +1,7 @@
 // src/components/Sidebar.js
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Icon from "./Icon";
 import {
   faUsers,
   faMapMarkedAlt,
@@ -49,7 +49,7 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
           {/* Thông báo */}
           <li>
             <NavLink to="/Thongbao" className={({ isActive }) => (isActive ? "active" : "")}>
-              <FontAwesomeIcon icon={faBell} />
+               <Icon name="notifications" />
               <span className="menu-text">Thông báo</span>
             </NavLink>
           </li>
@@ -156,90 +156,139 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
 				</li>
             </ul>
           </li>
-		{/* Các loại Bản đồ */}
+		  {/* Dữ liệu Lâm nghiệp */}
+          <li className="sidebar-item">
+  <div
+    className={`summary ${openMenu === "DulieuLamnghiep" ? "open" : ""}`}
+    onClick={() => toggleMenu("DulieuLamnghiep")}
+  >
+    <FontAwesomeIcon icon={faChartBar} />
+    <span className="menu-text">Dữ liệu Lâm nghiệp</span>
+    <FontAwesomeIcon
+      icon={openMenu === "DulieuLamnghiep" ? faChevronDown : faChevronRight}
+      className="arrow-icon"
+    />
+  </div>
+  <ul className={`submenu ${openMenu === "DulieuLamnghiep" ? "show" : ""}`}>
+    <li>
+      <NavLink to="/DulieuLamnghiep" className={({ isActive }) => (isActive ? "active" : "")}>
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Hiện trạng rừng</span>
+      </NavLink>
+    </li>
+	 <li>
+      <NavLink to="/DulieuLamnghiep" className={({ isActive }) => (isActive ? "active" : "")}>
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Quy hoạch lâm nghiệp</span>
+      </NavLink>
+    </li>
+	<li>
+      <NavLink to="/DulieuLamnghiep" className={({ isActive }) => (isActive ? "active" : "")}>
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Đơn vị chủ rừng</span>
+      </NavLink>
+    </li>
+	 </ul>
+</li>
+		{/* Bản đồ số hóa */}
 <li className="sidebar-item">
   <div
-    className={`summary ${openMenu === "report" ? "open" : ""}`}
-    onClick={() => toggleMenu("report")}
+    className={`summary ${openMenu === "map" ? "open" : ""}`}
+    onClick={() => toggleMenu("map")}
+	<Icon name="map" />
   >
     <FontAwesomeIcon icon={faChartBar} />
     <span className="menu-text">Bản đồ số hóa</span>
     <FontAwesomeIcon
-      icon={openMenu === "report" ? faChevronDown : faChevronRight}
+      icon={openMenu === "map" ? faChevronDown : faChevronRight}
       className="arrow-icon"
     />
   </div>
 
-  {/* Sub menu */}
-  <ul className={`submenu ${openMenu === "report" ? "show" : ""}`}>
+  <ul className={`submenu ${openMenu === "map" ? "show" : ""}`}>
     <li>
-      <NavLink
-        to="/google-maps"
-        className={({ isActive }) => (isActive ? "active" : "")}
-      >
+      <NavLink to="/google-maps" className={({ isActive }) => (isActive ? "active" : "")}>
+	  <Icon name="location_on" />
         <FontAwesomeIcon icon={faMapMarkedAlt} />
         <span className="menu-text">Bản đồ Lâm sản</span>
       </NavLink>
     </li>
-
     <li>
-      <NavLink
-        to="/bandolamnghiep"
-        className={({ isActive }) => (isActive ? "active" : "")}
-      >
+      <NavLink to="/bandolamnghiep" className={({ isActive }) => (isActive ? "active" : "")}>
         <FontAwesomeIcon icon={faMapMarkedAlt} />
         <span className="menu-text">Bản đồ Lâm nghiệp</span>
       </NavLink>
     </li>
   </ul>
 </li>
-		{/* Các loại Văn bản */}
+
+{/* Văn bản Lâm nghiệp */}
 <li className="sidebar-item">
   <div
-    className={`summary ${openMenu === "report" ? "open" : ""}`}
-    onClick={() => toggleMenu("report")}
+    className={`summary ${openMenu === "document" ? "open" : ""}`}
+    onClick={() => toggleMenu("document")}
   >
     <FontAwesomeIcon icon={faChartBar} />
     <span className="menu-text">Văn bản Lâm nghiệp</span>
     <FontAwesomeIcon
-      icon={openMenu === "report" ? faChevronDown : faChevronRight}
+      icon={openMenu === "document" ? faChevronDown : faChevronRight}
       className="arrow-icon"
     />
   </div>
 
-  {/* Sub menu */}
-  <ul className={`submenu ${openMenu === "report" ? "show" : ""}`}>
+  <ul className={`submenu ${openMenu === "document" ? "show" : ""}`}>
     <li>
-      <NavLink
-        to="/google-maps"
-        className={({ isActive }) => (isActive ? "active" : "")}
-      >
+      <NavLink to="/vanban-phapluat" className={({ isActive }) => (isActive ? "active" : "")}>
         <FontAwesomeIcon icon={faMapMarkedAlt} />
-        <span className="menu-text">Quy phạm phạm luật</span>
+        <span className="menu-text">Quy phạm pháp luật</span>
       </NavLink>
     </li>
 
     <li>
-      <NavLink
-        to="/Vanban"
-        className={({ isActive }) => (isActive ? "active" : "")}
-      >
+      <NavLink to="/vanban" className={({ isActive }) => (isActive ? "active" : "")}>
         <FontAwesomeIcon icon={faMapMarkedAlt} />
         <span className="menu-text">Quy chuẩn, kỹ thuật</span>
       </NavLink>
     </li>
-	 <li>
-      <NavLink
-        to="/Vanban"
-        className={({ isActive }) => (isActive ? "active" : "")}
-      >
+
+    <li>
+      <NavLink to="/vipham" className={({ isActive }) => (isActive ? "active" : "")}>
         <FontAwesomeIcon icon={faMapMarkedAlt} />
         <span className="menu-text">Vi phạm hành chính</span>
       </NavLink>
     </li>
   </ul>
 </li>
+	{/* Thu tuc hanh chinh */}
+<li className="sidebar-item">
+  <div
+    className={`summary ${openMenu === "Thutuchanhchinh" ? "open" : ""}`}
+    onClick={() => toggleMenu("Thutuchanhchinh")}
+  >
+    <FontAwesomeIcon icon={faChartBar} />
+    <span className="menu-text">Thủ tục hành chính</span>
+    <FontAwesomeIcon
+      icon={openMenu === "Thutuchanhchinh" ? faChevronDown : faChevronRight}
+      className="arrow-icon"
+    />
+  </div>
 
+  <ul className={`submenu ${openMenu === "Thutuchanhchinh" ? "show" : ""}`}>
+    <li>
+      <NavLink to="/Thutuchanhchinh" className={({ isActive }) => (isActive ? "active" : "")}>
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Add module 1</span>
+      </NavLink>
+    </li>
+	 <li>
+      <NavLink to="/Thutuchanhchinh" className={({ isActive }) => (isActive ? "active" : "")}>
+        <FontAwesomeIcon icon={faMapMarkedAlt} />
+        <span className="menu-text">Add module 2</span>
+      </NavLink>
+    </li>
+	 </ul>
+</li>
+		
           {/* Admin */}
           {role === "admin" && (
             <>
@@ -253,7 +302,7 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
               <li>
                 <NavLink to="/admin/customers" className={({ isActive }) => (isActive ? "active" : "")}>
                   <FontAwesomeIcon icon={faUserCog} />
-                  <span className="menu-text">Quản lý Khách hàng</span>
+                  <span className="menu-text">Quản lý...</span>
                 </NavLink>
               </li>
 

@@ -1,44 +1,101 @@
+/* --- CẤU TRÚC CHÍNH --- */
 .sidebar {
-  width: 220px;
+  width: 270px; /* Độ rộng lý tưởng để hiển thị đầy đủ tiếng Việt */
   height: 100vh;
-  background-color: #f0f4f8;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+  background-color: #2d3748;
+  color: #fff;
   position: fixed;
   left: 0;
   top: 0;
+  overflow-y: auto;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
-.sidebar h3 {
-  margin-bottom: 20px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin-bottom: 10px;
-}
-
-.sidebar a {
+/* --- ĐỊNH DẠNG DÒNG MENU --- */
+.summary,
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  gap: 12px;           /* Khoảng cách cố định giữa Icon và Chữ */
+  width: 100%;
+  box-sizing: border-box;
   text-decoration: none;
-  color: #333;
+  color: #cbd5e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* --- XỬ LÝ ICON (Thẳng hàng tuyệt đối) --- */
+.sidebar-nav svg, 
+.sidebar-nav .icon,
+.sidebar-nav .material-symbols-outlined,
+.sidebar-nav [class^="material-"] {
+  width: 24px !important; /* Cố định khung 24px cho mọi loại icon */
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;         /* Không cho icon bị méo khi chữ dài */
+}
+
+/* --- XỬ LÝ CHỮ (Đẩy mũi tên ra biên) --- */
+.menu-text {
+  flex: 1;                /* Chiếm hết phần giữa, đẩy mũi tên về cuối */
+  text-align: left;
+  white-space: nowrap;    /* Không cho xuống dòng */
+  overflow: hidden;       /* Ẩn nếu quá dài */
+  text-overflow: ellipsis;/* Hiện dấu ... nếu vượt quá chiều rộng */
+  font-size: 14.5px;
   font-weight: 500;
 }
 
-.dashboard-layout {
-  display: flex;
+/* --- XỬ LÝ MŨI TÊN --- */
+.arrow-icon {
+  margin-left: auto;      /* Lớp bảo hiểm thứ 2 để mũi tên luôn sát phải */
+  flex-shrink: 0;
+  font-size: 12px;
+  transition: transform 0.3s ease;
 }
 
-.dashboard-content {
-  margin-left: 240px;
-  padding: 30px;
-  flex: 1;
+/* Xoay mũi tên khi mở Submenu */
+.summary.open .arrow-icon {
+  transform: rotate(90deg); 
 }
-.icon {
-  font-size: 20px;
-  margin-right: 10px;
-  vertical-align: middle;
+
+/* --- TRẠNG THÁI HOVER & ACTIVE --- */
+.sidebar-nav a:hover,
+.summary:hover {
+  background-color: #4a5568;
+  color: #fff;
+}
+
+.sidebar-nav a.active {
+  background-color: #3182ce;
+  color: #fff;
+  border-radius: 4px;
+  margin: 0 8px; /* Tạo khoảng cách với biên để trông hiện đại hơn */
+}
+
+/* --- SUBMENU (Mục con) --- */
+.submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #1a202c;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.submenu.show {
+  max-height: 1000px; 
+}
+
+.submenu li a {
+  padding-left: 48px; /* 24px icon + 12px gap + 12px thụt lề */
+  font-size: 13.5px;
+  color: #a0aec0;
 }

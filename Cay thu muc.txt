@@ -1,0 +1,39 @@
+Du an Frontend:
+
+- public
+- src
+  + assets
+  +components
+	AddProductModal.js (Thêm gỗ vào cs đã có)
+	AddBreedingProductModal.js (Thêm đv vào cs đã có)
+  + contexts
+  + data
+  + layouts
+  + pages
+	KhaiBaoCoSoPage.js "Khai báo cs gỗ" =>khai-bao
+	KhaiBaoCoSoDongvat.js "Khai báo cs Đv" =>khai-bao-dongvat
+	RegisterManageSub1Page "Q lý cs gỗ" =>wood-farms
+	 - WoodDetail.js "Sổ theo dõi thực vật" =>woods
+	 - WoodEditPage.js "Chỉnh thông tin cs gỗ" =>edit-wood
+	RegisterManageSub2Page "Q lý cs ĐV" =>breeding-farms
+	 - FarmDetail.js "Sổ theo dõi động vật" =>farm-details
+	 - FarmEditPage.js "Chỉnh thông tin cs nuôi ĐV" =>edit-farm
+	 - FarmDetail.js "Sổ theo dõi ĐV" =>farm-details
+	
+	MasterProductListPage "Tổng hợp lâm sản gỗ" =>google-maps
+	MasterAnimalListPage "Tổng hợp lâm động vật" =>breeding-farms
+	GoogleMapsPage.js "Bản đồ cs gỗ + ĐV" =>
+	
+	
+	
+ 
+  + utlis
+  + api.js
+  + App.js
+  + Dashboard.css
+  + index.css
+  + inde.js
+  + userListpage.js
+- .env
+- .gitignore
+- package.json

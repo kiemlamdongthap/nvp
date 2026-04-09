@@ -2,16 +2,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../contexts/AuthContext'; // Tối ưu: Dùng context để nhất quán
-import speciesOptions from '../data/speciesData'; // Import danh sách loài
+import { useAuth } from '../contexts/AuthContext';
+import speciesOptions from '../data/speciesData';
 
-// Import CSS
-import '../Dashboard.css';
 import './FormPage.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:10000';
 
-// Khởi tạo state ban đầu cho form
 const initialFarmData = {
     tenCoSo: '', tinhThanhPho: '', xaPhuong: '', diaChiCoSo: '',
     vido: '', kinhdo: '', ngayThanhLap: '', giayPhepKinhDoanh: '',
@@ -24,10 +21,9 @@ const initialFarmData = {
 };
 
 function FarmEditPage() {
-    // === PHẦN KHAI BÁO STATE VÀ HOOKS ===
     const { id: farmId } = useParams();
     const navigate = useNavigate();
-    const { auth } = useAuth(); // Tối ưu: Lấy thông tin auth từ context
+    const { auth } = useAuth();
     const token = auth?.token;
 
     const [farmData, setFarmData] = useState(initialFarmData);
@@ -36,7 +32,6 @@ function FarmEditPage() {
     const [successMessage, setSuccessMessage] = useState('');
     const [showManualSpeciesInput, setShowManualSpeciesInput] = useState(false);
 
-    // === PHẦN TẢI DỮ LIỆU ===
     const fetchFarmData = useCallback(async () => {
         if (!farmId || !token) {
             setError('Thiếu thông tin xác thực hoặc ID cơ sở.');
@@ -51,12 +46,9 @@ function FarmEditPage() {
             });
             const data = response.data;
 
-            // Tối ưu: Tạo một đối tượng mới với tất cả các key từ initial state
-            // để tránh lỗi "controlled to uncontrolled component"
             const formattedData = { ...initialFarmData };
             for (const key in formattedData) {
                 if (data[key] !== null && data[key] !== undefined) {
-                    // Định dạng lại ngày tháng cho input type="date"
                     if (['ngayThanhLap', 'ngayCapCCCD', 'issueDate', 'expiryDate'].includes(key) && data[key]) {
                         formattedData[key] = new Date(data[key]).toISOString().split('T')[0];
                     } else {
@@ -66,7 +58,6 @@ function FarmEditPage() {
             }
             setFarmData(formattedData);
 
-            // Kiểm tra nếu tên lâm sản không có trong speciesOptions thì hiển thị input thủ công
             if (formattedData.tenLamSan && !speciesOptions.some(s => s.tenLamSan === formattedData.tenLamSan)) {
                 setShowManualSpeciesInput(true);
             }
@@ -83,10 +74,8 @@ function FarmEditPage() {
         fetchFarmData();
     }, [fetchFarmData]);
 
-    // === PHẦN XỬ LÝ FORM ===
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         if (name === 'tenLamSan') {
             if (value === 'Nhập thủ công') {
                 setShowManualSpeciesInput(true);
@@ -112,13 +101,11 @@ function FarmEditPage() {
 
         try {
             const dataToSend = { ...farmData };
-
-            // Tối ưu: Xóa các trường không liên quan dựa trên loại hình đăng ký
             if (dataToSend.loaiCoSoDangKy === 'Đăng ký cơ sở gây nuôi động vật') {
                 delete dataToSend.loaiHinhKinhDoanhGo;
                 delete dataToSend.nganhNgheKinhDoanhGo;
                 delete dataToSend.khoiLuong;
-            } else if (dataToSend.loaiCoSoDangKy === 'Đăng ký cơ sở kinh doanh, chế biến gỗ') {
+            } else {
                 delete dataToSend.mucDichNuoi;
                 delete dataToSend.hinhThucNuoi;
                 delete dataToSend.maSoCoSoGayNuoi;
@@ -128,104 +115,171 @@ function FarmEditPage() {
             await axios.put(`${API_BASE_URL}/api/farms/${farmId}`, dataToSend, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setSuccessMessage('Cập nhật thông tin cơ sở thành công!');
-            
+            setSuccessMessage('Cập nhật thông tin thành công!');
+            setTimeout(() => navigate(-1), 1200);
         } catch (err) {
-            console.error('Lỗi khi cập nhật cơ sở:', err);
-            const message = err.response?.data?.message || 'Đã xảy ra lỗi khi cập nhật. Vui lòng thử lại.';
-            setError(message);
+            setError(err.response?.data?.message || 'Đã xảy ra lỗi khi cập nhật.');
         }
     };
 
-    // === PHẦN HIỂN THỊ (RENDER) ===
-    if (loading) {
-        return <div className="form-container"><p>Đang tải thông tin cơ sở...</p></div>;
-    }
+    if (loading) return <div className="form-container"><p>Đang tải thông tin cơ sở...</p></div>;
 
     return (
         <div className="form-container">
-            <h1>Chỉnh sửa thông tin cơ sở</h1>
-            {successMessage && <p className="success-message">{successMessage}</p>}
-            {error && <p className="error-message">{error}</p>}
+            <h1 className="farm-title">📝 Chỉnh sửa thông tin cơ sở</h1>
+            
+            {successMessage && <div className="success-message">{successMessage}</div>}
+            {error && <div className="error-message">{error}</div>}
+
             <form onSubmit={handleSubmit}>
-                <section className="khai-bao-section">
-                    <h2>Thông tin cơ sở</h2>
-                    <div className="form-grid">
-                        <div className="form-group"><label htmlFor="tenCoSo">Tên cơ sở:</label><input type="text" id="tenCoSo" name="tenCoSo" value={farmData.tenCoSo} onChange={handleChange} required /></div>
-                        <div className="form-group"><label htmlFor="tinhThanhPho">Tỉnh (Thành phố):</label><input type="text" id="tinhThanhPho" name="tinhThanhPho" value={farmData.tinhThanhPho} onChange={handleChange} required /></div>
-                        <div className="form-group"><label htmlFor="xaPhuong">Xã (Phường):</label><input type="text" id="xaPhuong" name="xaPhuong" value={farmData.xaPhuong} onChange={handleChange} required /></div>
-                        <div className="form-group"><label htmlFor="diaChiCoSo">Địa chỉ:</label><input type="text" id="diaChiCoSo" name="diaChiCoSo" value={farmData.diaChiCoSo} onChange={handleChange} required /></div>
-                        <div className="form-group"><label htmlFor="vido">Vĩ độ:</label><input type="text" id="vido" name="vido" value={farmData.vido} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="kinhdo">Kinh độ:</label><input type="text" id="kinhdo" name="kinhdo" value={farmData.kinhdo} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="ngayThanhLap">Ngày thành lập:</label><input type="date" id="ngayThanhLap" name="ngayThanhLap" value={farmData.ngayThanhLap} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="loaiCoSoDangKy">Loại cơ sở đăng ký:</label><select id="loaiCoSoDangKy" name="loaiCoSoDangKy" value={farmData.loaiCoSoDangKy} onChange={handleChange} required><option value="">- Chọn loại cơ sở -</option><option value="Đăng ký cơ sở gây nuôi động vật">Cơ sở gây nuôi động vật</option><option value="Đăng ký cơ sở kinh doanh, chế biến gỗ">Cơ sở kinh doanh, chế biến gỗ</option></select></div>
-                        <div className="form-group"><label htmlFor="trangThai">Trạng thái:</label><select id="trangThai" name="trangThai" value={farmData.trangThai} onChange={handleChange}><option value="">- Chọn trạng thái -</option><option value="Đang hoạt động">Đang hoạt động</option><option value="Đã đóng cửa">Đã đóng cửa</option><option value="Tạm ngưng">Tạm ngưng</option></select></div>
-                        <div className="form-group"><label htmlFor="ghiChu">Ghi chú:</label><input type="text" id="ghiChu" name="ghiChu" value={farmData.ghiChu} onChange={handleChange} /></div>
-                    </div>
-                </section>
-
-                <section className="khai-bao-section">
-                    <h2>Người đại diện</h2>
-                    <div className="form-grid">
-                        <div className="form-group"><label htmlFor="tenNguoiDaiDien">Họ và tên:</label><input type="text" id="tenNguoiDaiDien" name="tenNguoiDaiDien" value={farmData.tenNguoiDaiDien} onChange={handleChange} required /></div>
-                        <div className="form-group"><label htmlFor="namSinh">Năm sinh:</label><input type="number" id="namSinh" name="namSinh" value={farmData.namSinh} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="soCCCD">Số CCCD/Hộ chiếu:</label><input type="text" id="soCCCD" name="soCCCD" value={farmData.soCCCD} onChange={handleChange} required /></div>
-                        <div className="form-group"><label htmlFor="ngayCapCCCD">Ngày cấp:</label><input type="date" id="ngayCapCCCD" name="ngayCapCCCD" value={farmData.ngayCapCCCD} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="noiCapCCCD">Nơi cấp:</label><input type="text" id="noiCapCCCD" name="noiCapCCCD" value={farmData.noiCapCCCD} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="soDienThoaiNguoiDaiDien">Số điện thoại:</label><input type="tel" id="soDienThoaiNguoiDaiDien" name="soDienThoaiNguoiDaiDien" value={farmData.soDienThoaiNguoiDaiDien} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="diaChiNguoiDaiDien">Địa chỉ:</label><input type="text" id="diaChiNguoiDaiDien" name="diaChiNguoiDaiDien" value={farmData.diaChiNguoiDaiDien} onChange={handleChange} /></div>
-                    </div>
-                </section>
-
-                {farmData.loaiCoSoDangKy === 'Đăng ký cơ sở gây nuôi động vật' && (
-                    <section className="khai-bao-section">
-                        <h3>Thông tin Cơ sở gây nuôi</h3>
-                        <div className="form-grid">
-                            <div className="form-group"><label htmlFor="mucDichNuoi">Mục đích nuôi:</label><select id="mucDichNuoi" name="mucDichNuoi" value={farmData.mucDichNuoi} onChange={handleChange}><option value="">Chọn mục đích</option><option value="Nuôi thương mại">Nuôi thương mại</option><option value="Nuôi phi thương mại">Nuôi phi thương mại</option></select></div>
-                            <div className="form-group"><label htmlFor="hinhThucNuoi">Hình thức nuôi:</label><select id="hinhThucNuoi" name="hinhThucNuoi" value={farmData.hinhThucNuoi} onChange={handleChange}><option value="">Chọn hình thức</option><option value="Sinh trưởng">Sinh trưởng</option><option value="Sinh sản">Sinh sản</option><option value="Sinh trưởng và sinh sản">Sinh trưởng và sinh sản</option></select></div>
-                            <div className="form-group"><label htmlFor="maSoCoSoGayNuoi">Mã số cơ sở:</label><input type="text" id="maSoCoSoGayNuoi" name="maSoCoSoGayNuoi" value={farmData.maSoCoSoGayNuoi} onChange={handleChange} /></div>
-                            <div className="form-group"><label htmlFor="tongDan">Tổng đàn:</label><input type="number" id="tongDan" name="tongDan" value={farmData.tongDan} onChange={handleChange} /></div>
+                {/* PHẦN 1: THÔNG TIN CƠ SỞ */}
+                <div className="modern-form" style={{ marginBottom: '24px' }}>
+                    <div className="stats-header">🏢 Thông tin cơ sở</div>
+                    <div className="form-grid-2" style={{ padding: '20px' }}>
+                        <div className="form-group"><label>Tên cơ sở:</label><input type="text" name="tenCoSo" value={farmData.tenCoSo} onChange={handleChange} required /></div>
+                        <div className="form-group"><label>Tỉnh (Thành phố):</label><input type="text" name="tinhThanhPho" value={farmData.tinhThanhPho} onChange={handleChange} required /></div>
+                        <div className="form-group"><label>Xã (Phường):</label><input type="text" name="xaPhuong" value={farmData.xaPhuong} onChange={handleChange} required /></div>
+                        <div className="form-group"><label>Địa chỉ:</label><input type="text" name="diaChiCoSo" value={farmData.diaChiCoSo} onChange={handleChange} required /></div>
+                        <div className="form-group"><label>Vĩ độ:</label><input type="text" name="vido" value={farmData.vido} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Kinh độ:</label><input type="text" name="kinhdo" value={farmData.kinhdo} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Ngày thành lập:</label><input type="date" name="ngayThanhLap" value={farmData.ngayThanhLap} onChange={handleChange} /></div>
+                        <div className="form-group">
+                            <label>Loại đăng ký:</label>
+                            <select name="loaiCoSoDangKy" value={farmData.loaiCoSoDangKy} onChange={handleChange} required className="custom-select">
+                                <option value="">- Chọn loại cơ sở -</option>
+                                <option value="Đăng ký cơ sở gây nuôi động vật">Cơ sở gây nuôi động vật</option>
+                                <option value="Đăng ký cơ sở kinh doanh, chế biến gỗ">Cơ sở kinh doanh, chế biến gỗ</option>
+                            </select>
                         </div>
-                    </section>
+                        <div className="form-group">
+                            <label>Trạng thái:</label>
+                            <select name="trangThai" value={farmData.trangThai} onChange={handleChange} className="custom-select">
+                                <option value="">- Chọn trạng thái -</option>
+                                <option value="Đang hoạt động">Đang hoạt động</option>
+                                <option value="Tạm ngưng">Tạm ngưng</option>
+                                <option value="Đã đóng cửa">Đã đóng cửa</option>
+                            </select>
+                        </div>
+                        <div className="form-group"><label>Ghi chú:</label><input type="text" name="ghiChu" value={farmData.ghiChu} onChange={handleChange} /></div>
+                    </div>
+                </div>
+
+                {/* PHẦN 2: NGƯỜI ĐẠI DIỆN */}
+                <div className="modern-form" style={{ marginBottom: '24px' }}>
+                    <div className="stats-header">👤 Người đại diện</div>
+                    <div className="form-grid-2" style={{ padding: '20px' }}>
+                        <div className="form-group"><label>Họ và tên:</label><input type="text" name="tenNguoiDaiDien" value={farmData.tenNguoiDaiDien} onChange={handleChange} required /></div>
+                        <div className="form-group"><label>Năm sinh:</label><input type="number" name="namSinh" value={farmData.namSinh} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Số CCCD/Hộ chiếu:</label><input type="text" name="soCCCD" value={farmData.soCCCD} onChange={handleChange} required /></div>
+                        <div className="form-group"><label>Ngày cấp:</label><input type="date" name="ngayCapCCCD" value={farmData.ngayCapCCCD} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Nơi cấp:</label><input type="text" name="noiCapCCCD" value={farmData.noiCapCCCD} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Số điện thoại:</label><input type="tel" name="soDienThoaiNguoiDaiDien" value={farmData.soDienThoaiNguoiDaiDien} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Địa chỉ thường trú:</label><input type="text" name="diaChiNguoiDaiDien" value={farmData.diaChiNguoiDaiDien} onChange={handleChange} /></div>
+                    </div>
+                </div>
+
+                {/* PHẦN 3: THÔNG TIN CHUYÊN MÔN THEO LOẠI HÌNH */}
+                {farmData.loaiCoSoDangKy === 'Đăng ký cơ sở gây nuôi động vật' && (
+                    <div className="modern-form" style={{ marginBottom: '24px' }}>
+                        <div className="stats-header">🐾 Chi tiết cơ sở gây nuôi</div>
+                        <div className="form-grid-2" style={{ padding: '20px' }}>
+                            <div className="form-group">
+                                <label>Mục đích nuôi:</label>
+                                <select name="mucDichNuoi" value={farmData.mucDichNuoi} onChange={handleChange} className="custom-select">
+                                    <option value="">Chọn mục đích</option>
+                                    <option value="Nuôi thương mại">Nuôi thương mại</option>
+                                    <option value="Nuôi phi thương mại">Nuôi phi thương mại</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Hình thức nuôi:</label>
+                                <select name="hinhThucNuoi" value={farmData.hinhThucNuoi} onChange={handleChange} className="custom-select">
+                                    <option value="">Chọn hình thức</option>
+                                    <option value="Sinh trưởng">Sinh trưởng</option>
+                                    <option value="Sinh sản">Sinh sản</option>
+                                    <option value="Sinh trưởng và sinh sản">Sinh trưởng và sinh sản</option>
+                                </select>
+                            </div>
+                            <div className="form-group"><label>Mã số cơ sở:</label><input type="text" name="maSoCoSoGayNuoi" value={farmData.maSoCoSoGayNuoi} onChange={handleChange} /></div>
+                            <div className="form-group"><label>Tổng đàn:</label><input type="number" name="tongDan" value={farmData.tongDan} onChange={handleChange} /></div>
+                        </div>
+                    </div>
                 )}
 
                 {farmData.loaiCoSoDangKy === 'Đăng ký cơ sở kinh doanh, chế biến gỗ' && (
-                    <section className="khai-bao-section">
-                        <h3>Thông tin Cơ sở kinh doanh, chế biến gỗ</h3>
-                        <div className="form-grid">
-                            <div className="form-group"><label htmlFor="loaiHinhKinhDoanhGo">Loại hình kinh doanh:</label><select id="loaiHinhKinhDoanhGo" name="loaiHinhKinhDoanhGo" value={farmData.loaiHinhKinhDoanhGo} onChange={handleChange}><option value="">Chọn loại hình</option><option value="Trại cưa">Trại cưa</option><option value="Trại mộc">Trại mộc</option><option value="Trang trí nội thất">Trang trí nội thất</option></select></div>
-                            <div className="form-group"><label htmlFor="nganhNgheKinhDoanhGo">Ngành nghề:</label><select id="nganhNgheKinhDoanhGo" name="nganhNgheKinhDoanhGo" value={farmData.nganhNgheKinhDoanhGo} onChange={handleChange}><option value="">Chọn ngành nghề</option><option value="Thương mại">Thương mại</option><option value="Cưa gia công và mộc">Cưa gia công và mộc</option><option value="Chế biến mộc và thương mại">Chế biến mộc và thương mại</option></select></div>
-                            <div className="form-group"><label htmlFor="khoiLuong">Khối lượng:</label><input type="text" id="khoiLuong" name="khoiLuong" value={farmData.khoiLuong} onChange={handleChange} /></div>
+                    <div className="modern-form" style={{ marginBottom: '24px' }}>
+                        <div className="stats-header">🪵 Chi tiết cơ sở gỗ</div>
+                        <div className="form-grid-2" style={{ padding: '20px' }}>
+                            <div className="form-group">
+                                <label>Loại hình kinh doanh:</label>
+                                <select name="loaiHinhKinhDoanhGo" value={farmData.loaiHinhKinhDoanhGo} onChange={handleChange} className="custom-select">
+                                    <option value="">Chọn loại hình</option>
+                                    <option value="Trại cưa">Trại cưa</option>
+                                    <option value="Trại mộc">Trại mộc</option>
+                                    <option value="Trang trí nội thất">Trang trí nội thất</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Ngành nghề:</label>
+                                <select name="nganhNgheKinhDoanhGo" value={farmData.nganhNgheKinhDoanhGo} onChange={handleChange} className="custom-select">
+                                    <option value="">Chọn ngành nghề</option>
+                                    <option value="Thương mại">Thương mại</option>
+                                    <option value="Cưa gia công và mộc">Cưa gia công và mộc</option>
+                                    <option value="Chế biến mộc và thương mại">Chế biến mộc và thương mại</option>
+                                </select>
+                            </div>
+                            <div className="form-group"><label>Khối lượng:</label><input type="text" name="khoiLuong" value={farmData.khoiLuong} onChange={handleChange} /></div>
                         </div>
-                    </section>
-                )}
-
-                {farmData.loaiCoSoDangKy && (
-                    <section className="khai-bao-section">
-                        <h3>Thông tin Loài</h3>
-                        <div className="form-grid">
-                            <div className="form-group"><label htmlFor="tenLamSan">Tên lâm sản:</label>{showManualSpeciesInput ? (<input type="text" id="tenLamSan" name="tenLamSan" value={farmData.tenLamSan} onChange={handleChange} placeholder="Nhập tên lâm sản" />) : (<select id="tenLamSan" name="tenLamSan" value={farmData.tenLamSan} onChange={handleChange}><option value="">Chọn tên lâm sản</option>{speciesOptions.map((opt, i) => (<option key={i} value={opt.tenLamSan}>{opt.tenLamSan}</option>))}<option value="Nhập thủ công">Loài khác (Nhập thủ công)</option></select>)}</div>
-                            <div className="form-group"><label htmlFor="tenKhoaHoc">Tên khoa học:</label>{showManualSpeciesInput ? (<input type="text" id="tenKhoaHoc" name="tenKhoaHoc" value={farmData.tenKhoaHoc} onChange={handleChange} placeholder="Nhập tên khoa học" />) : (<input type="text" id="tenKhoaHoc" name="tenKhoaHoc" value={farmData.tenKhoaHoc} readOnly />)}</div>
-                        </div>
-                    </section>
-                )}
-
-                <section className="khai-bao-section">
-                    <h3>Thông tin Giấy phép</h3>
-                    <div className="form-grid">
-                        <div className="form-group"><label htmlFor="giayPhepKinhDoanh">Số giấy phép kinh doanh:</label><input type="text" id="giayPhepKinhDoanh" name="giayPhepKinhDoanh" value={farmData.giayPhepKinhDoanh} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="issueDate">Ngày cấp:</label><input type="date" id="issueDate" name="issueDate" value={farmData.issueDate} onChange={handleChange} /></div>
-                        <div className="form-group"><label htmlFor="expiryDate">Ngày hết hạn:</label><input type="date" id="expiryDate" name="expiryDate" value={farmData.expiryDate} onChange={handleChange} /></div>
                     </div>
-                </section>
+                )}
 
-                <div className="form-actions">
-                    <button type="submit" className="submit-button">Lưu thay đổi</button>
-                    <button type="button" className="cancel-button" onClick={() => navigate(-1)}>Hủy</button>
+                {/* PHẦN 4: THÔNG TIN LOÀI */}
+                {farmData.loaiCoSoDangKy && (
+                    <div className="modern-form" style={{ marginBottom: '24px' }}>
+                        <div className="stats-header">🌿 Thông tin loài lâm sản</div>
+                        <div className="form-grid-2" style={{ padding: '20px' }}>
+                            <div className="form-group">
+                                <label>Tên lâm sản:</label>
+                                {showManualSpeciesInput ? (
+                                    <input type="text" name="tenLamSan" value={farmData.tenLamSan} onChange={handleChange} placeholder="Nhập tên lâm sản" />
+                                ) : (
+                                    <select name="tenLamSan" value={farmData.tenLamSan} onChange={handleChange} className="custom-select">
+                                        <option value="">Chọn tên lâm sản</option>
+                                        {speciesOptions.map((opt, i) => (<option key={i} value={opt.tenLamSan}>{opt.tenLamSan}</option>))}
+                                        <option value="Nhập thủ công">Loài khác (Nhập thủ công)</option>
+                                    </select>
+                                )}
+                            </div>
+                            <div className="form-group">
+                                <label>Tên khoa học:</label>
+                                <input type="text" name="tenKhoaHoc" value={farmData.tenKhoaHoc} onChange={handleChange} readOnly={!showManualSpeciesInput} className={!showManualSpeciesInput ? "readonly-input" : ""} />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* PHẦN 5: GIẤY PHÉP */}
+                <div className="modern-form" style={{ marginBottom: '24px' }}>
+                    <div className="stats-header">📜 Thông tin giấy phép kinh doanh</div>
+                    <div className="form-grid-2" style={{ padding: '20px' }}>
+                        <div className="form-group"><label>Số giấy phép:</label><input type="text" name="giayPhepKinhDoanh" value={farmData.giayPhepKinhDoanh} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Ngày cấp:</label><input type="date" name="issueDate" value={farmData.issueDate} onChange={handleChange} /></div>
+                        <div className="form-group"><label>Ngày hết hạn:</label><input type="date" name="expiryDate" value={farmData.expiryDate} onChange={handleChange} /></div>
+                    </div>
                 </div>
-            </form>
-        </div>
-    );
+    
+                {/* NÚT BẤM - CHỈ CĂN GIỮA CỤM NÀY */}
+<div className="modern-actions-container">
+    <button type="submit" className="button-modern-save">
+        Lưu thay đổi
+    </button>
+    <button type="button" className="button-modern-cancel" onClick={() => navigate(-1)}>
+        Hủy bỏ
+    </button>
+</div>
+                </form>
+                </div>
+);
 }
 
 export default FarmEditPage;

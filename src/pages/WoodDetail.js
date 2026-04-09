@@ -4,23 +4,23 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 
 // Import CSS
-import '../Dashboard.css';
 import './FormPage.css';
-import './Manager.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:10000';
 
 // --- Component Con: Tiêu đề thông tin cơ sở ---
-const FarmHeader = ({ farm }) => (
-    <section className="farm-details-section">
-        <h3>Thông tin chi tiết cơ sở</h3>
-        <div className="details-grid">
-            <div className="detail-item"><strong>Địa chỉ:</strong><p>{farm?.diaChiCoSo || 'N/A'}</p></div>
-            <div className="detail-item"><strong>Loại hình chế biến gỗ:</strong><p>{farm?.loaiHinhCheBienGo || 'N/A'}</p></div>
-            <div className="detail-item"><strong>Nguồn gốc gỗ:</strong><p>{farm?.nguonGocGo || 'N/A'}</p></div>
-        </div>
-    </section>
-);
+// --- Component Con: Tiêu đề thông tin cơ sở ---
+const FarmHeader = ({ farm }) => {
+  return (
+    <div className="farm-title">
+      📒 Sổ theo dõi: 
+      <strong> Cơ sở {farm?.tenCoSo}</strong>
+      {" "}
+      (Địa chỉ: {farm?.diaChiCoSo}, {farm?.communeName}, {farm?.provinceName})
+    </div>
+  );
+};
+
 
 // --- Component Con: Form Nhập/Xuất và Sửa ---
 const ActivityForm = ({ farmDetails, farmId, token, onActivityAdded, speciesOptions, onSpeciesChange, selectedSpeciesFromParent, initialData, onFormEditCompleted }) => {
@@ -142,96 +142,125 @@ const ActivityForm = ({ farmDetails, farmId, token, onActivityAdded, speciesOpti
             setError(err.response?.data?.message || `❌ ${isEditing ? 'Cập nhật' : 'Thêm'} bản ghi thất bại.`);
         }
     };
-
+// === PHẦN HIỂN THỊ (RENDER) ===
     return (
-        <section>
-            <h3>{isEditing ? 'Sửa bản ghi' : 'Thêm bản ghi nhập/xuất mới:'}</h3>
-            {message && <div className="success-message">{message}</div>}
-            {error && <div className="error-message">{error}</div>}
-            <form onSubmit={handleSubmit} className="modern-form">
-                <div className="form-grid">
-                    <div className="form-group">
-                        <label>Tên lâm sản:</label>
-                        <select name="speciesName" value={formData.speciesName} onChange={handleFormChange} required>
-                            <option value="">-- Chọn lâm sản --</option>
-                            {speciesOptions.map((species, index) => (
-                                <option key={index} value={species}>{species}</option>
-                            ))}
-                        </select>
-                    </div>
+  <section className="wood-activity-container">
+    {message && <div className="alert alert-success">{message}</div>}
+    {error && <div className="alert alert-danger">{error}</div>}
 
-                    {selectedProductDetails && (
-                        <>
-                            <div className="form-group">
-                                <label>Khối lượng tồn (m³):</label>
-                                <input type="text" value={selectedProductDetails.khoiLuong || 0} readOnly disabled />
-                            </div>
-                            <div className="form-group">
-                                <label>Tên khoa học:</label>
-                                <input type="text" value={selectedProductDetails.tenKhoaHoc || ''} readOnly disabled />
-                            </div>
-                            <div className="form-group">
-                                <label>Loại hình chế biến:</label>
-                                <input type="text" value={selectedProductDetails.loaiHinhCheBienGo || ''} readOnly disabled />
-                            </div>
-                            <div className="form-group">
-                                <label>Nguồn gốc:</label>
-                                <input type="text" value={selectedProductDetails.nguonGocGo || ''} readOnly disabled />
-                            </div>
-                        </>
-                    )}
+    <form onSubmit={handleSubmit} className="wood-modern-form">
+      
+      {/* 🔹 PHẦN 1: THÔNG TIN LÂM SẢN & THỐNG KÊ (ÉP 1 HÀNG) */}
+<div style={{ 
+    display: 'flex', 
+    gap: '10px', 
+    alignItems: 'flex-start', 
+    marginBottom: '20px',
+    background: '#f8fafc',
+    padding: '10px',
+    borderRadius: '8px',
+    border: '1px solid #dce3ea'
+}}>
+    {/* Ô chọn loài - Ép độ rộng cố định */}
+    <div style={{ flex: '0 0 250px' }}>
+        <label className="label-title">🌲 Tên lâm sản</label>
+        <select
+            name="speciesName"
+            value={formData.speciesName}
+            onChange={handleFormChange}
+            className="custom-select"
+            required
+        >
+            <option value="">=> Chọn lâm sản</option>
+            {speciesOptions.map((s, i) => (
+                <option key={i} value={s}>{s}</option>
+            ))}
+        </select>
+    </div>
 
-                    <div className="form-group">
-                        <label>Ngày ghi nhận:</label>
-                        <input type="date" name="date" value={formData.date} onChange={handleFormChange} required />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Loại giao dịch:</label>
-                        <select name="type" value={formData.type} onChange={handleFormChange} required>
-                            <option value="">-- Chọn loại --</option>
-                            <option value="import">Nhập</option>
-                            <option value="export">Xuất</option>
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Số lượng (m³):</label>
-                        <input type="number" step="any" name="quantity" value={formData.quantity} onChange={handleFormChange} min="0" required />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Lý do:</label>
-                        <input type="text" name="reason" value={formData.reason} onChange={handleFormChange} />
-                    </div>
-
-                    {formData.type === 'import' && (
-                        <div className="form-group">
-                            <label>Nguồn gốc (Mới):</label>
-                            <input type="text" name="source" value={formData.source} onChange={handleFormChange} required />
-                        </div>
-                    )}
-                    {formData.type === 'export' && (
-                        <div className="form-group">
-                            <label>Nơi đến:</label>
-                            <input type="text" name="destination" value={formData.destination} onChange={handleFormChange} />
-                        </div>
-                    )}
-
-                    <div className="form-group">
-                        <label>Người xác nhận:</label>
-                        <input type="text" name="verifiedBy" value={formData.verifiedBy} onChange={handleFormChange} />
-                    </div>
-                </div>
-                <button type="submit" className="submit-button">{isEditing ? 'Cập nhật bản ghi' : 'Thêm bản ghi'}</button>
-                {isEditing && (
-                    <button type="button" onClick={() => onFormEditCompleted()} className="cancel-button" style={{ marginLeft: '10px' }}>Hủy</button>
+    {/* Bảng thống kê - Ép chiếm phần còn lại */}
+    <div style={{ flex: '1', overflowX: 'auto' }}>
+        <table className="modern-table" style={{ minWidth: 'unset', width: '100%', margin: 0 }}>
+            <thead>
+                <tr>
+                    <th style={{ padding: '6px', fontSize: '12px' }}>Tên loài</th>
+                    <th style={{ padding: '6px', fontSize: '12px' }}>Khoa học</th>
+                    <th style={{ padding: '6px', fontSize: '12px' }}>Khối lượng (m³)</th>
+                    <th style={{ padding: '6px', fontSize: '12px' }}>Chế biến</th>
+                    <th style={{ padding: '6px', fontSize: '12px' }}>Nguồn gốc</th>
+                </tr>
+            </thead>
+            <tbody>
+                {selectedProductDetails ? (
+                    <tr>
+                        <td style={{ padding: '6px' }}>{selectedProductDetails.tenLamSan}</td>
+                        <td style={{ padding: '6px' }} className="italic">{selectedProductDetails.tenKhoaHoc || '---'}</td>
+                        <td style={{ padding: '6px' }} className="total">{selectedProductDetails.khoiLuong ?? 0}</td>
+                        <td style={{ padding: '6px' }}>{selectedProductDetails.loaiHinhCheBienGo}</td>
+                        <td style={{ padding: '6px' }}>{selectedProductDetails.nguonGocGo}</td>
+                    </tr>
+                ) : (
+                    <tr>
+                        <td colSpan="5" style={{ padding: '10px', color: '#999', textAlign: 'center' }}>
+                            Chọn lâm sản để xem dữ liệu...
+                        </td>
+                    </tr>
                 )}
-            </form>
-        </section>
-    );
-};
+            </tbody>
+        </table>
+    </div>
+</div>
 
+{/* 🔹 PHẦN 2: CÁC Ô NHẬP LIỆU GIAO DỊCH (ÉP 1 HÀNG) */}
+<div className="modern-form" style={{ padding: '15px' }}>
+    <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(6, 1fr)', 
+        gap: '10px' 
+    }}>
+        <div className="form-group">
+            <label>Ngày ghi nhận</label>
+            <input type="date" name="date" value={formData.date} onChange={handleFormChange} required />
+        </div>
+
+        <div className="form-group">
+            <label>Loại giao dịch</label>
+            <select name="type" value={formData.type} onChange={handleFormChange} required>
+                <option value="">=> Chọn</option>
+                <option value="import">Nhập</option>
+                <option value="export">Xuất</option>
+            </select>
+        </div>
+
+        <div className="form-group">
+            <label>Số lượng (m³)</label>
+            <input type="number" step="any" name="quantity" value={formData.quantity} onChange={handleFormChange} placeholder="0.00" required />
+        </div>
+
+        <div className="form-group">
+            <label>{formData.type === 'export' ? 'Nơi đến' : 'Nguồn gốc'}</label>
+            <input type="text" name={formData.type === 'export' ? 'destination' : 'source'} 
+                   value={formData.type === 'export' ? formData.destination : formData.source} 
+                   onChange={handleFormChange} placeholder="Địa chỉ..." />
+        </div>
+
+        <div className="form-group">
+            <label>Lý do</label>
+            <input type="text" name="reason" value={formData.reason} onChange={handleFormChange} placeholder="Nhập lý do..." />
+        </div>
+
+        <div className="form-group">
+            <label>Cán bộ xác nhận</label>
+            <input type="text" name="verifiedBy" value={formData.verifiedBy} onChange={handleFormChange} placeholder="Tên cán bộ" />
+        </div>
+    </div>
+    
+    <button type="submit" className="submit-button" style={{ marginTop: '15px' }}>🚀 Lưu bản ghi hệ thống</button>
+</div>
+    </form>
+  </section>
+);
+};
 // --- Component Con: Bảng Lịch sử Hoạt động ---
 const ActivityTable = ({ activities, role, onDelete, onEdit }) => (
     <section className="activity-list-container">
@@ -354,7 +383,7 @@ function WoodDetail() {
 
     return (
         <div className="form-container">
-            <h2>👁️ Nhật ký hoạt động gỗ của cơ sở: {farmDetails?.tenCoSo}</h2>
+            
             {farmDetails && <FarmHeader farm={farmDetails} />}
             <ActivityForm
                 farmDetails={farmDetails}

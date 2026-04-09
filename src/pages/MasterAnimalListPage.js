@@ -147,7 +147,7 @@ function MasterAnimalListPage() {
 
         <div className="master-list-container">
 
-            <h1>Tổng hợp lâm sản tại các cơ sở gây nuôi động vật 🐘 </h1>
+            <h1>Tổng hợp lâm sản tại các cơ sở: Động vật 🐘 </h1>
 
 
             {/* FILTER */}

@@ -277,7 +277,7 @@ const fetchData = useCallback(async () => {
 
     return (
         <div className="farm-list-container">
-            <h2>Cơ sở kinh doanh, chế biến gỗ🪵</h2>
+            <h2>Quản lý cơ sở: Thực vật rừng (gỗ) 🪵</h2>
             {/* Phần bộ lọc */}
             <div className="filter-container">
                 <input

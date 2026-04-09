@@ -457,3 +457,51 @@
 .activity-list-container::-webkit-scrollbar-track{
   background:#f1f3f6;
 }
+/* Container bọc 2 nút để căn giữa */
+.modern-actions-container {
+    display: flex;
+    justify-content: center; /* Căn giữa 2 nút theo chiều ngang */
+    align-items: center;
+    gap: 16px;               /* Khoảng cách giữa nút Lưu và Hủy */
+    margin-top: 30px;        /* Khoảng cách với nội dung phía trên */
+    padding: 20px 0;
+    border-top: 1px solid #eee; /* Đường kẻ mờ phân cách form và nút */
+    width: 100%;             /* Đảm bảo chiếm hết chiều rộng để căn giữa chuẩn */
+}
+
+/* Style nút Lưu thay đổi */
+.button-modern-save {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 10px 32px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+}
+
+.button-modern-save:hover {
+    background-color: #1d4ed8;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+
+/* Style nút Hủy bỏ */
+.button-modern-cancel {
+    background-color: #64748b; /* Màu xám hiện đại */
+    color: #ffffff;
+    padding: 10px 32px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.button-modern-cancel:hover {
+    background-color: #475569;
+    opacity: 0.9;
+}

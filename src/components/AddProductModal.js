@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import './AddProductModal.css';
+import woodSpeciesOptions from '../data/woodSpeciesData';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:10000';
 
@@ -63,12 +64,29 @@ function AddProductModal({ isOpen, onRequestClose, farmId, onProductAdded }) {
   }, [isOpen]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProductData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: null }));
-    }
-  };
+  const { name, value } = e.target;
+
+  if (name === "tenLamSan") {
+    const selected = woodSpeciesOptions.find(s => s.name === value);
+
+    setProductData(prev => ({
+      ...prev,
+      tenLamSan: value,
+      tenKhoaHoc: value === "Nhập thủ công"
+        ? ""
+        : selected?.scientificName || ""
+    }));
+  } else {
+    setProductData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  if (errors[name]) {
+    setErrors(prev => ({ ...prev, [name]: null }));
+  }
+};
 
   const validateForm = () => {
     const newErrors = {};
@@ -116,19 +134,45 @@ function AddProductModal({ isOpen, onRequestClose, farmId, onProductAdded }) {
       <h2>Thêm Lâm sản mới</h2>
       <form onSubmit={handleSubmit} className="modal-form" noValidate>
         <FormGroup
-          label="Tên lâm sản:"
-          name="tenLamSan"
-          value={productData.tenLamSan}
-          onChange={handleChange}
-          error={errors.tenLamSan}
-        />
+  label="Tên lâm sản:"
+  name="tenLamSan"
+  value={productData.tenLamSan}
+  onChange={handleChange}
+  error={errors.tenLamSan}
+>
+  <select
+    id="tenLamSan"
+    name="tenLamSan"
+    value={productData.tenLamSan}
+    onChange={handleChange}
+    className={errors.tenLamSan ? 'is-invalid' : ''}
+  >
+    <option value="">=> Chọn loại gỗ </option>
+
+    {woodSpeciesOptions.map((s) => (
+      <option key={s.name} value={s.name}>
+        {s.name} ({s.scientificName})
+      </option>
+    ))}
+
+    <option value="Nhập thủ công">Nhập thủ công</option>
+  </select>
+</FormGroup>
 
         <FormGroup
-          label="Tên khoa học (không bắt buộc):"
-          name="tenKhoaHoc"
-          value={productData.tenKhoaHoc}
-          onChange={handleChange}
-        />
+  label="Tên khoa học (không bắt buộc):"
+  name="tenKhoaHoc"
+  value={productData.tenKhoaHoc}
+  onChange={handleChange}
+>
+  <input
+    type="text"
+    name="tenKhoaHoc"
+    value={productData.tenKhoaHoc}
+    onChange={handleChange}
+    disabled={productData.tenLamSan !== "Nhập thủ công"}
+  />
+</FormGroup>
 
         <FormGroup
           label="Khối lượng (m³):"

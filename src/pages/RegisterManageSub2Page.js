@@ -176,7 +176,7 @@ function RegisterManageSub2Page() {
 
     return (
         <div className="farm-list-container">
-            <h2>Cơ sở gây nuôi động vật rừng 🐾</h2>
+            <h2>Quản lý cơ sở: Động vật rừng 🐾</h2>
             
             <div className="filter-container">
                 <input

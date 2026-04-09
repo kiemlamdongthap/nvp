@@ -87,7 +87,7 @@ function MasterProductListPage() {
 
     return (
         <div className="master-list-container">
-            <h1>Tổng hợp lâm sản tại các cơ sở kinh doanh, chế biến gỗ 📋</h1>
+            <h1>Tổng hợp lâm sản tại các cơ sở: Thực vật (gỗ)🪵</h1>
             
             <div className="filters-panel">
                 <input type="text" name="tenCoSo" placeholder="Lọc theo tên cơ sở..." onChange={handleFilterChange} value={filters.tenCoSo} />

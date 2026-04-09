@@ -137,13 +137,13 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
     <li>
       <NavLink to="/tonghop-go">
         <Icon name="description" />
-        <span>Tổng hợp gỗ</span>
+        <span>Lâm sản thực vật</span>
       </NavLink>
     </li>
     <li>
       <NavLink to="/tonghop-dongvat">
         <Icon name="pets" />
-        <span>Tổng hợp động vật</span>
+        <span>Lâm sản động vật</span>
       </NavLink>
     </li>
   </ul>
@@ -242,13 +242,13 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
     <li>
       <NavLink to="/vanban">
         <Icon name="description" />
-        <span>Quy chuẩn</span>
+        <span>Tiêu chuẩn</span>
       </NavLink>
     </li>
     <li>
       <NavLink to="/vipham">
         <Icon name="warning" />
-        <span>Xử lý VPPL</span>
+        <span>Xử lý vi phạm</span>
       </NavLink>
     </li>
   </ul>

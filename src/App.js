@@ -21,7 +21,7 @@ import MasterProductListPage from './pages/MasterProductListPage'; //Tong hop go
 import MasterAnimalListPage from './pages/MasterAnimalListPage'; //Tong hop dong vat
 import UserListPage from './pages/UserListPage';
 import CustomerListPage from './pages/CustomerListPage';
-
+import NotebookLMPage from './pages/NotebookLMPage';
 function App() {
 	// === Tích hợp Icon Chatbot Nhịp tim đỏ ===
   useEffect(() => {
@@ -65,6 +65,7 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="dashboard" element={<DashboardPage />} />
 		  <Route path="Thongbao" element={<Thongbao />} />
+		  <Route path="Notebook" element={<NotebookLMPage />} />
           <Route path="khai-bao" element={<KhaiBaoCoSo />} />
 		  <Route path="khai-bao-dongvat" element={<KhaiBaoCoSoDongvat />} />
           <Route path="google-maps" element={<Googlemaps />} />

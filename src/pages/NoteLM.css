@@ -1,0 +1,114 @@
+/* NoteLM.css - BẢN TỐI ƯU CUỐI CÙNG */
+
+.notelm-wrapper {
+    width: 100%;
+    padding: 40px 10px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa toàn bộ khối */
+}
+
+.notelm-main-title {
+    color: #2ecc71; /* Màu xanh rừng chủ đạo */
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 900;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(46, 204, 113, 0.2);
+}
+
+.notelm-grid {
+    display: grid;
+    /* Ép 7 cột trên màn hình lớn */
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 40px 20px;
+    max-width: 1400px;
+    width: 100%;
+}
+
+.notelm-card {
+    display: flex;
+    flex-direction: column; /* Xếp dọc: Icon trên - Chữ dưới */
+    align-items: center;    /* CĂN GIỮA ICON VÀ CHỮ THEO TRỤC ĐỨNG */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.notelm-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.icon-container {
+    position: relative;
+    width: 85px;
+    height: 85px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(46, 204, 113, 0.3); /* Viền xanh nhẹ */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.icon-emoji {
+    font-size: 36px;
+    z-index: 2;
+}
+
+.glow-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-glow); /* Lấy màu từ props React */
+    opacity: 0;
+    filter: blur(15px);
+    transition: opacity 0.3s ease;
+}
+
+.notelm-card:hover .glow-layer {
+    opacity: 0.25; /* Hiệu ứng tỏa sáng khi di chuột */
+}
+
+.text-content {
+    width: 100%;
+    text-align: center; /* CĂN GIỮA CHỮ SO VỚI ICON */
+}
+
+.title-label {
+    display: inline-block;
+    white-space: nowrap; /* ÉP CHỮ NẰM TRÊN 1 HÀNG, KHÔNG XUỐNG DÒNG */
+    font-size: 13px;
+    font-weight: 800; /* In đậm */
+    line-height: 1.2;
+}
+
+/* --- RESPONSIVE: Tự động điều chỉnh theo màn hình --- */
+
+/* Tablet: 4 cột */
+@media (max-width: 1024px) {
+    .notelm-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Mobile: 2 cột */
+@media (max-width: 600px) {
+    .notelm-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px 10px;
+    }
+    .title-label {
+        white-space: normal; /* Mobile màn hình hẹp thì cho phép xuống dòng để không bị lấn màn hình */
+        font-size: 11px;
+    }
+    .icon-container {
+        width: 75px;
+        height: 75px;
+    }
+}

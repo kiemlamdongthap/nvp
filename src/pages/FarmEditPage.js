@@ -269,14 +269,10 @@ function FarmEditPage() {
                 </div>
     
                 {/* NÚT BẤM - CHỈ CĂN GIỮA CỤM NÀY */}
-<div className="modern-actions-container">
-    <button type="submit" className="button-modern-save">
-        Lưu thay đổi
-    </button>
-    <button type="button" className="button-modern-cancel" onClick={() => navigate(-1)}>
-        Hủy bỏ
-    </button>
-</div>
+                <div className="modern-actions-container">
+                <button type="submit" className="button-modern-save">Lưu thay đổi</button>
+                <button type="button" className="button-modern-cancel" onClick={() => navigate(-1)}>Hủy bỏ</button>
+                </div>
                 </form>
                 </div>
 );

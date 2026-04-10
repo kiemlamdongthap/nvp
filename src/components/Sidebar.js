@@ -253,7 +253,15 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
     </li>
   </ul>
 </li>
-
+        {/* 📚 NotebookLM */}
+<li>
+  <NavLink to="/Notebook" className={({ isActive }) => isActive ? "active" : ""}>
+    {/* Thêm style cố định hoặc class để đảm bảo icon luôn nằm giữa ô 24px */}
+    <Icon name="smart_toy" style={{ width: '24px', textAlign: 'center' }} />
+    <span className="menu-text">Sổ tay Ai</span>
+    <div style={{ width: '24px' }}></div> 
+  </NavLink>
+</li>
         {/* 👑 ADMIN */}
           {role === "admin" && (
             <>

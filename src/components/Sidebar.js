@@ -149,7 +149,7 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
   </ul>
 </li>
 
-         {/* 🌲 Dữ liệu */}
+        {/* 🌲 Dữ liệu */}
 <li className="sidebar-item">
   <div 
     className={`summary ${openMenu === "data" ? "open" : ""}`} 
@@ -158,25 +158,26 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
     <Icon name="forest" />
     <span className="menu-text">Dữ liệu</span>
     
-    {/* Thêm class arrow-icon để đẩy mũi tên ra sát biên phải */}
     <Icon 
       name={openMenu === "data" ? "expand_more" : "chevron_right"} 
       className="arrow-icon" 
     />
   </div>
 
-  {/* Tất cả các mục con phải nằm trong ul submenu để ẩn/hiện đồng bộ */}
   <ul className={`submenu ${openMenu === "data" ? "show" : ""}`}>
+    {/* Mục Diễn biến rừng: Hiển thị bảng Excel Biểu 01 theo năm */}
     <li>
-      <NavLink to="/dulieulamnghiep/hien-trang">
-        <Icon name="map" />
-        <span>Hiện trạng rừng</span>
+      <NavLink to="/dien-bien-rung">
+        <Icon name="history_edu" />
+        <span>Diễn biến rừng</span>
       </NavLink>
     </li>
+    
+    {/* Mục Quy hoạch rừng: Dự phòng cho dữ liệu quy hoạch sau này */}
     <li>
-      <NavLink to="/dulieulamnghiep/quy-hoach">
-        <Icon name="history_edu" /> {/* Bạn có thể đổi icon cho phù hợp */}
-        <span>Quy hoạch rừng</span>
+      <NavLink to="/quy-hoach">
+        <Icon name="assignment" /> 
+        <span>Về quy hoạch</span>
       </NavLink>
     </li>
   </ul>

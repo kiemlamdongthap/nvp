@@ -22,6 +22,8 @@ import MasterAnimalListPage from './pages/MasterAnimalListPage'; //Tong hop dong
 import UserListPage from './pages/UserListPage';
 import CustomerListPage from './pages/CustomerListPage';
 import NotebookLMPage from './pages/NotebookLMPage';
+import DiengBienRung from './pages/DiengBienRung';
+import Quyhoach from './pages/Quyhoach';
 function App() {
 	// === Tích hợp Icon Chatbot Nhịp tim đỏ ===
   useEffect(() => {
@@ -71,6 +73,8 @@ function App() {
           <Route path="google-maps" element={<Googlemaps />} />
           <Route path="tonghop-go" element={<MasterProductListPage />} />
 		  <Route path="tonghop-dongvat" element={<MasterAnimalListPage />} />
+		  <Route path="dien-bien-rung" element={<DiengBienRung />} /> 
+		  <Route path="quy-hoach" element={<Quyhoach />} /> 
 
           {/* Farm (Gây nuôi) specific routes */}
           <Route path="admin/breeding-farms" element={<RegisterManageSub2Page />} />

@@ -1,0 +1,213 @@
+/* 1. BIẾN TOÀN CỤC & LAYOUT CHỦ ĐẠO */
+:root {
+  --primary-green: #1a472a;    /* Màu xanh kiểm lâm chính */
+  --accent-green: #2e7d32;
+  --bg-light: #f4f7f6;
+  --text-dark: #2d3748;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-container {
+  background-color: var(--bg-light);
+  padding: 24px;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-dark);
+}
+
+/* 2. HEADER: TÊN HỆ THỐNG */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.brand { display: flex; align-items: center; gap: 16px; }
+.logo-icon { 
+  font-size: 32px; 
+  background: #fff; 
+  padding: 8px; 
+  border-radius: 12px; 
+  box-shadow: var(--shadow); 
+}
+.brand h1 { margin: 0; font-size: 22px; color: var(--primary-green); font-weight: 700; }
+.brand p { margin: 0; font-size: 14px; color: var(--text-muted); }
+
+/* 3. THANH ĐIỀU KHIỂN (TOOLBAR) */
+.toolbar-card {
+  background: white;
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid #edf2f7;
+  margin-bottom: 24px;
+}
+
+.filter-row-tripple {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 15px;
+}
+
+.input-group { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+.input-group label { 
+  font-size: 11px; 
+  font-weight: 700; 
+  color: var(--text-muted); 
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.input-group select, .main-export-btn-small {
+  height: 42px; /* Đồng nhất chiều cao */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.input-group select {
+  padding: 0 12px;
+  background-color: #f8fafc;
+  color: var(--text-dark);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.input-group select:focus {
+  border-color: var(--accent-green);
+  background-color: #fff;
+}
+
+/* 4. NÚT XUẤT BÁO CÁO VÀ DROPDOWN CLICK */
+.export-column { flex: 0.8; position: relative; }
+
+.main-export-btn-small {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.main-export-btn-small:hover { background-color: #2d5a3f; }
+.main-export-btn-small.active { background-color: #244d34; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+
+.dropdown-content-inline {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  z-index: 100;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-content-inline button {
+  width: 100%;
+  padding: 14px 16px; /* Diện tích bấm rộng để dễ chọn */
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-content-inline button:hover {
+  background-color: #f0fdf4;
+  color: var(--primary-green);
+}
+
+/* 5. BANNER TRẠNG THÁI */
+.status-banner {
+  background-color: #fffaf0;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #975a16;
+  border-left: 4px solid #ed8936;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.dot { height: 8px; width: 8px; background-color: #ed8936; border-radius: 50%; }
+
+/* 6. HIỂN THỊ NỘI DUNG BẢNG EXCEL HÀNH CHÍNH */
+.content-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  max-height: 75vh;
+}
+
+.excel-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.excel-content td {
+  border: 1px solid #cbd5e1 !important;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* FORMAT TIÊU ĐỀ 3 DÒNG ĐẦU */
+.excel-content table tr:nth-child(1) td {
+  font-weight: bold !important;
+  text-align: center !important;
+  font-size: 16px;
+  border: none !important;
+}
+
+.excel-content table tr:nth-child(2) td {
+  font-style: italic !important;
+  text-align: center !important;
+  border: none !important;
+}
+
+.excel-content table tr:nth-child(3) td {
+  font-style: italic !important;
+  text-align: right !important;
+  border: none !important;
+}
+
+/* DÒNG TIÊU ĐỀ CỘT */
+.excel-content table tr:nth-child(4) td {
+  background-color: #f1f5f9 !important;
+  font-weight: bold !important;
+  text-align: center !important;
+}
+
+/* Tùy chỉnh thanh cuộn ngang */
+.table-responsive::-webkit-scrollbar { height: 8px; }
+.table-responsive::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }

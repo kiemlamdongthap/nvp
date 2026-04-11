@@ -84,7 +84,7 @@ const response = await axios.get(
           <div className="logo-icon">🌿</div>
           <div>
             <h1>Tổng hợp số liệu Diễn biến rừng</h1>
-            <p>Phòng Quản lý, phát triển và Sử dụng rừng</p>
+            <p>Phòng Quản lý, phát triển và Sử dụng rừng ©2025©</p>
           </div>
         </div>
       </header>

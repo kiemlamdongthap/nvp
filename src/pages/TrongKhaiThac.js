@@ -104,7 +104,7 @@ const TrongKhaiThac = () => {
           <div className="logo-icon">🌳</div>
           <div>
             <h1>Báo cáo Trồng và Khai thác rừng</h1>
-            <p>Phòng Quản lý, phát triển và Sử dụng rừng</p>
+            <p>Phòng Quản lý, phát triển và Sử dụng rừng ©2025©</p>
           </div>
         </div>
       </header>
@@ -146,23 +146,20 @@ const TrongKhaiThac = () => {
             </div>
           </div>
         </div>
-        
-        <div className="status-banner">
-          <span className="dot"></span>
-          Dữ liệu được cập nhật dựa trên phương án khai thác và kế hoạch trồng rừng năm {year}.
-        </div>
+               
       </div>
 
       <main className="content-card">
-        {loading ? (
-          <div className="loading-overlay">
-            <div className="spinner"></div>
-            <p>Đang trích xuất dữ liệu báo cáo...</p>
-          </div>
-        ) : (
-          <div className="table-responsive excel-content" dangerouslySetInnerHTML={{ __html: htmlData }} />
-        )}
-      </main>
+  {loading ? (
+    <div className="loading-overlay">
+      <div className="spinner"></div>
+      <p>Đang trích xuất dữ liệu báo cáo...</p>
+    </div>
+  ) : (
+    /* LƯU Ý: Phải có đúng 2 class này để nhận CSS kẻ bảng */
+    <div className="table-responsive excel-content" dangerouslySetInnerHTML={{ __html: htmlData }} />
+  )}
+</main>
     </div>
   );
 };

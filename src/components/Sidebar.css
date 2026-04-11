@@ -1,6 +1,6 @@
 /* --- CẤU TRÚC CHÍNH --- */
 .sidebar {
-  width: 240px; /* Độ rộng lý tưởng để hiển thị đầy đủ tiếng Việt */
+  width: 200px; /* Độ rộng lý tưởng để hiển thị đầy đủ tiếng Việt */
   height: 100vh;
   background-color: #2d3748;
   color: #fff;

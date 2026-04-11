@@ -2,17 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
-import './DiengBienRung.css'; // Sử dụng chung file CSS để giao diện đồng nhất
+import './DiengBienRung.css'; // Sử dụng chung bộ nhận diện giao diện
 
-const Quyhoach = () => {
+const ChuyenMucDich = () => {
+  const currentYear = new Date().getFullYear();
+  const startYear = 2024;
+  
+  const years = [];
+  for (let i = currentYear; i >= startYear; i--) years.push(i);
+
+  // Giả định file CMDSDR-2025.xlsx có các Sheet tương ứng với các biểu báo cáo
   const reportTypes = [
-    { id: 'Bieu01', name: '🎯 Quy hoạch sử dụng đất quốc gia (QĐ 326/QĐ-TTg)' },
-    { id: 'Bieu02', name: '👥 Quy hoạch lâm nghiệp quốc gia (QĐ 895/QĐ-TTg)' },
-    { id: 'Bieu03', name: '🌳 Điều chỉnh quy hoạch tỉnh giai đoạn 2021-2030' },
-    { id: 'Bieu04', name: '📉 Chỉ tiêu phát triển rừng theo giai đoạn' },
-    { id: 'Bieu05', name: '📍 Danh mục các dự án ưu tiên đầu tư' },
+    { id: 'Bieu01', name: '🎯 Danh mục dự án chuyển mục đích' },
+    { id: 'Bieu02', name: '🌲 Chi tiết diện tích rừng thay thế' },
+    { id: 'Bieu03', name: '💰 Tình hình nộp tiền trồng rừng thay thế' },
   ];
 
+  const [year, setYear] = useState(currentYear.toString());
   const [reportId, setReportId] = useState(reportTypes[0].id);
   const [htmlData, setHtmlData] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,7 +26,8 @@ const Quyhoach = () => {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const exportMenuRef = useRef(null);
 
-  // Đóng menu khi click ra ngoài
+  const BASE_URL = 'https://kiemtra-zg3v.onrender.com'; // URL Backend của bạn
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (exportMenuRef.current && !exportMenuRef.current.contains(event.target)) {
@@ -31,30 +38,32 @@ const Quyhoach = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const loadExcel = async (selectedReportId) => {
+  const loadExcel = async (selectedYear, selectedReportId) => {
     setLoading(true);
     try {
-      const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:10000';
+      // Endpoint giả định: /api/cmdsdr/:year (Bạn cần cấu hình router backend tương tự TrongKhaiThac)
       const response = await axios.get(
-        `${BASE_URL}/api/reports/quyhoach/data`, 
+        `${BASE_URL}/api/cmdsdr/${selectedYear}`, 
         { responseType: 'arraybuffer' }
       );
-      
+
       setRawBuffer(response.data);
       const workbook = XLSX.read(response.data, { type: 'buffer' });
       const worksheet = workbook.Sheets[selectedReportId];
       
-      if (!worksheet) throw new Error(`Không tìm thấy biểu mẫu ${selectedReportId}`);
-      
+      if (!worksheet) throw new Error("Không tìm thấy sheet");
+
       const html = XLSX.utils.sheet_to_html(worksheet);
       setHtmlData(html);
     } catch (err) {
-      setHtmlData(`<div class="error-msg">⚠️ Hệ thống đang cập nhật dữ liệu quy hoạch tổng hợp</div>`);
+      setHtmlData(`<div class="error-msg">⚠️ Chưa có dữ liệu chuyển mục đích sử dụng rừng năm ${selectedYear}</div>`);
     }
     setLoading(false);
   };
 
-  useEffect(() => { loadExcel(reportId); }, [reportId]);
+  useEffect(() => {
+    loadExcel(year, reportId);
+  }, [year, reportId]);
 
   const handleExportAction = (type) => {
     if (!rawBuffer) return alert("Chưa có dữ liệu!");
@@ -63,9 +72,9 @@ const Quyhoach = () => {
       const newWb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(newWb, workbook.Sheets[reportId], reportId);
       const out = XLSX.write(newWb, { bookType: 'xlsx', type: 'array' });
-      saveAs(new Blob([out]), `QuyHoach_${reportId}.xlsx`);
+      saveAs(new Blob([out]), `CMDSDR_${reportId}_${year}.xlsx`);
     } else {
-      saveAs(new Blob([rawBuffer]), `File_Goc_Quy_Hoach.xlsx`);
+      saveAs(new Blob([rawBuffer]), `Bao_cao_CMDSDR_Tong_hop_${year}.xlsx`);
     }
     setShowExportMenu(false);
   };
@@ -74,9 +83,9 @@ const Quyhoach = () => {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <div className="brand">
-          <div className="logo-icon">📈</div>
+          <div className="logo-icon">🔄</div>
           <div>
-            <h1>Tổng hợp số liệu về Quy hoạch</h1>
+            <h1>Chuyển mục đích sử dụng rừng</h1>
             <p>Phòng Quản lý, phát triển và Sử dụng rừng ©2025©</p>
           </div>
         </div>
@@ -84,10 +93,17 @@ const Quyhoach = () => {
 
       <div className="toolbar-card">
         <div className="filter-row-tripple">
-          <div className="input-group" style={{ flex: 2 }}>
-            <label>📑 PHÂN LOẠI QUY HOẠCH</label>
+          <div className="input-group">
+            <label>📑 PHÂN LOẠI DỰ ÁN</label>
             <select value={reportId} onChange={(e) => setReportId(e.target.value)}>
               {reportTypes.map(rt => <option key={rt.id} value={rt.id}>{rt.name}</option>)}
+            </select>
+          </div>
+
+          <div className="input-group">
+            <label>📅 NĂM BÁO CÁO</label>
+            <select value={year} onChange={(e) => setYear(e.target.value)}>
+              {years.map(y => <option key={y} value={y}>{y}</option>)}
             </select>
           </div>
 
@@ -98,36 +114,37 @@ const Quyhoach = () => {
                 className={`main-export-btn-small ${showExportMenu ? 'active' : ''}`}
                 onClick={() => setShowExportMenu(!showExportMenu)}
               >
-                <span>📥</span> {showExportMenu ? 'Đang chọn mẫu...' : 'Chọn nguồn xuất'}
+                <span>📥</span> {showExportMenu ? 'Đang chọn mẫu...' : 'Chọn biểu để xuất'}
               </button>
               
               {showExportMenu && (
                 <div className="dropdown-content-inline">
                   <button onClick={() => handleExportAction('current')}>📄 Biểu đang xem (.xlsx)</button>
-                  <button onClick={() => handleExportAction('all')}>📂 Toàn bộ file QH (.xlsx)</button>
+                  <button onClick={() => handleExportAction('all')}>📂 Toàn bộ hồ sơ (.xlsx)</button>
                 </div>
               )}
             </div>
           </div>
         </div>
         
-              </div>
+        <div className="status-banner">
+          <span className="dot"></span>
+          Dữ liệu tổng hợp các dự án có quyết định chuyển mục đích sử dụng rừng sang mục đích khác năm {year}.
+        </div>
+      </div>
 
       <main className="content-card">
         {loading ? (
           <div className="loading-overlay">
             <div className="spinner"></div>
-            <p>Đang trích xuất dữ liệu quy hoạch...</p>
+            <p>Đang tải dữ liệu hồ sơ...</p>
           </div>
         ) : (
-          <div 
-            className="table-responsive excel-content" 
-            dangerouslySetInnerHTML={{ __html: htmlData }} 
-          />
+          <div className="table-responsive excel-content" dangerouslySetInnerHTML={{ __html: htmlData }} />
         )}
       </main>
     </div>
   );
 };
 
-export default Quyhoach;
+export default ChuyenMucDich;

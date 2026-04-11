@@ -25,6 +25,7 @@ import NotebookLMPage from './pages/NotebookLMPage';
 import DiengBienRung from './pages/DiengBienRung';
 import Quyhoach from './pages/Quyhoach';
 import TrongKhaiThac from './pages/TrongKhaiThac';
+import ChuyenMucDich from './pages/ChuyenMucDich';
 
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
 		  <Route path="dien-bien-rung" element={<DiengBienRung />} /> 
 		  <Route path="quy-hoach" element={<Quyhoach />} /> 
 		  <Route path="trong-khai-thac" element={<TrongKhaiThac />} /> 
+		  <Route path="chuyen-mđsdr" element={<ChuyenMucDich />} /> 
 
           {/* Farm (Gây nuôi) specific routes */}
           <Route path="admin/breeding-farms" element={<RegisterManageSub2Page />} />

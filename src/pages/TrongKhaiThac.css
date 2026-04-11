@@ -1,0 +1,192 @@
+/* TrongKhaiThac.css */
+:root {
+  --primary-green: #2d5a27;
+  --secondary-green: #4caf50;
+  --light-bg: #f4f7f6;
+  --border-color: #e0e0e0;
+  --text-dark: #333;
+}
+
+.report-container {
+  padding: 20px;
+  background-color: var(--light-bg);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.tab-navigation button {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: #666;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-navigation button.active {
+  background-color: var(--primary-green);
+  color: white;
+}
+
+.tab-navigation button:hover:not(.active) {
+  background-color: #e8f5e9;
+  color: var(--primary-green);
+}
+
+/* Bộ lọc năm */
+.filter-year {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.filter-year select {
+  padding: 8px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+}
+
+/* Vùng hiển thị Table Excel */
+.display-sheet {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow-x: auto; /* Quan trọng để bảng không bị tràn màn hình */
+}
+
+/* Style cho bảng HTML tạo ra từ XLSX */
+.excel-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.excel-table th, 
+.excel-table td {
+  border: 1px solid var(--border-color);
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.excel-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.excel-table tr:hover {
+  background-color: #f1f8e9;
+}
+
+/* Header của bảng Excel */
+.excel-table tr:first-child {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: var(--primary-green);
+}
+
+/* Trạng thái lỗi và Loading */
+.error {
+  color: #d32f2f;
+  padding: 20px;
+  background: #ffebee;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  color: var(--primary-green);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tab-navigation {
+    flex-direction: column;
+  }
+  
+  .filter-year {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* Container chính */
+.report-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Tab Navigation giống trong ảnh */
+.tab-navigation {
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 20px;
+}
+
+.tab-navigation button {
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-navigation button.active {
+  color: #2d5a27;
+  border-bottom-color: #2d5a27;
+  font-weight: bold;
+}
+
+/* Select chọn năm */
+.filter-year select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Thông báo lỗi */
+.error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  background: #fff3cd;
+  color: #856404;
+  border-radius: 8px;
+  border: 1px solid #ffeeba;
+}

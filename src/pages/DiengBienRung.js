@@ -43,10 +43,12 @@ const DiengBienRung = () => {
   const loadExcel = async (selectedYear, selectedReportId) => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:10000/api/reports/${selectedYear}`, 
-        { responseType: 'arraybuffer' }
-      );
+      const BASE_URL = process.env.REACT_APP_API_URL || 'https://kiemtra-zg3v.onrender.com';
+
+const response = await axios.get(
+  `${BASE_URL}/api/reports/${selectedYear}`, 
+  { responseType: 'arraybuffer' }
+);
       setRawBuffer(response.data);
       const workbook = XLSX.read(response.data, { type: 'buffer', cellStyles: true });
       const worksheet = workbook.Sheets[selectedReportId];
@@ -82,7 +84,7 @@ const DiengBienRung = () => {
           <div className="logo-icon">🌿</div>
           <div>
             <h1>Tổng hợp số liệu Diễn biến rừng</h1>
-            <p>Phòng Quản lý, phát triển và sử dụng rừng</p>
+            <p>Phòng Quản lý, phát triển và Sử dụng rừng</p>
           </div>
         </div>
       </header>

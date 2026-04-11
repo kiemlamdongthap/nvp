@@ -180,6 +180,18 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
         <span>Về quy hoạch</span>
       </NavLink>
     </li>
+	<li>
+      <NavLink to="/chuyen-mđsdr">
+        <Icon name="assignment" /> 
+        <span>Chuyển MĐ SDR </span>
+      </NavLink>
+    </li>
+	<li>
+      <NavLink to="/trong-khai-thac">
+        <Icon name="assignment" /> 
+        <span>Trồng, khai thác</span>
+      </NavLink>
+    </li>
   </ul>
 </li>
 
@@ -204,7 +216,7 @@ function Sidebar({ isSidebarOpen, sidebarRef }) {
     <li>
       <NavLink to="/google-maps">
         <Icon name="location_on" />
-        <span>Cơ sở</span>
+        <span>Lâm sản</span>
       </NavLink>
     </li>
     <li>

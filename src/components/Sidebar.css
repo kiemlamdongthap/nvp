@@ -1,6 +1,6 @@
 /* --- CẤU TRÚC CHÍNH --- */
 .sidebar {
-  width: 270px; /* Độ rộng lý tưởng để hiển thị đầy đủ tiếng Việt */
+  width: 240px; /* Độ rộng lý tưởng để hiển thị đầy đủ tiếng Việt */
   height: 100vh;
   background-color: #2d3748;
   color: #fff;
@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   padding: 12px 15px;
-  gap: 12px;           /* Khoảng cách cố định giữa Icon và Chữ */
+  gap: 10px;           /* Khoảng cách cố định giữa Icon và Chữ */
   width: 100%;
   box-sizing: border-box;
   text-decoration: none;

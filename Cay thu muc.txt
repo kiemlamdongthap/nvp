@@ -1,39 +1,34 @@
 Du an Frontend:
 
-- public
-- src
-  + assets
-  +components
-	AddProductModal.js (Thêm gỗ vào cs đã có)
-	AddBreedingProductModal.js (Thêm đv vào cs đã có)
-  + contexts
-  + data
-  + layouts
-  + pages
-	KhaiBaoCoSoPage.js "Khai báo cs gỗ" =>khai-bao
-	KhaiBaoCoSoDongvat.js "Khai báo cs Đv" =>khai-bao-dongvat
-	RegisterManageSub1Page "Q lý cs gỗ" =>wood-farms
-	 - WoodDetail.js "Sổ theo dõi thực vật" =>woods
-	 - WoodEditPage.js "Chỉnh thông tin cs gỗ" =>edit-wood
-	RegisterManageSub2Page "Q lý cs ĐV" =>breeding-farms
-	 - FarmDetail.js "Sổ theo dõi động vật" =>farm-details
-	 - FarmEditPage.js "Chỉnh thông tin cs nuôi ĐV" =>edit-farm
-	 - FarmDetail.js "Sổ theo dõi ĐV" =>farm-details
-	
-	MasterProductListPage "Tổng hợp lâm sản gỗ" =>google-maps
-	MasterAnimalListPage "Tổng hợp lâm động vật" =>breeding-farms
-	GoogleMapsPage.js "Bản đồ cs gỗ + ĐV" =>
-	
-	
-	
- 
-  + utlis
-  + api.js
-  + App.js
-  + Dashboard.css
-  + index.css
-  + inde.js
-  + userListpage.js
-- .env
-- .gitignore
-- package.json
+frontend-root/
+├── public/
+├── src/
+│   ├── assets/             # Hình ảnh, icons, fonts...
+│   ├── components/         # Các thành phần tái sử dụng
+│   │   ├── AddProductModal.js         (Thêm gỗ vào CS đã có)
+│   │   └── AddBreedingProductModal.js (Thêm ĐV vào CS đã có)
+│   ├── contexts/           # Quản lý State (AuthContext, ProjectContext...)
+│   ├── data/               # Dữ liệu tĩnh hoặc cấu hình
+│   ├── layouts/            # Layout chung (Header, Sidebar, Footer)
+│   ├── pages/              # Các trang chính trong ứng dụng
+│   │   ├── KhaiBaoCoSoPage.js         (/khai-bao)
+│   │   ├── KhaiBaoCoSoDongvat.js      (/khai-bao-dongvat)
+│   │   ├── RegisterManageSub1Page.js  (/wood-farms)
+│   │   ├── WoodDetail.js              (/woods)
+│   │   ├── WoodEditPage.js            (/edit-wood)
+│   │   ├── RegisterManageSub2Page.js  (/breeding-farms)
+│   │   ├── FarmDetail.js              (/farm-details)
+│   │   ├── FarmEditPage.js            (/edit-farm)
+│   │   ├── MasterProductListPage.js   (/google-maps - Tổng hợp gỗ)
+│   │   ├── MasterAnimalListPage.js    (/breeding-farms - Tổng hợp ĐV)
+│   │   ├── GoogleMapsPage.js          (Bản đồ CS gỗ + ĐV)
+│   │   └── userListpage.js            (Danh sách người dùng)
+│   ├── utils/              # Các hàm bổ trợ (format date, validate...)
+│   ├── api.js              # Cấu hình Axios/Fetch gọi Backend
+│   ├── App.js              # File điều hướng chính (Routes)
+│   ├── Dashboard.css       # Style riêng cho Dashboard
+│   ├── index.css           # Global style
+│   └── index.js            # Entry point của ứng dụng
+├── .env                    # Biến môi trường (API_URL...)
+├── .gitignore              # Bỏ qua khi push lên Git
+└── package.json            # Quản lý dependencies

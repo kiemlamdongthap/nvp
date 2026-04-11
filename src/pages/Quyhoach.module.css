@@ -1,0 +1,256 @@
+/* 1. Tổng thể Dashboard */
+.dashboardContainer {
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 0 20px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc; /* Nền xám xanh nhạt cực nhẹ */
+}
+
+/* 2. Header */
+.dashboardHeader {
+  background: #ffffff;
+  padding: 25px 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+  border-bottom: 3px solid #38a169; /* Thanh màu xanh rừng đặc trưng */
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logoIcon {
+  font-size: 2.5rem;
+  background: #f0fdf4;
+  padding: 12px;
+  border-radius: 15px;
+  line-height: 1;
+}
+
+.brand h1 {
+  font-size: 1.6rem;
+  color: #1a202c;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brand p {
+  color: #64748b;
+  margin: 4px 0 0 0;
+  font-size: 0.95rem;
+}
+
+/* 3. Toolbar & Bộ lọc */
+.toolbarCard {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+}
+
+.filterRowTripple {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1.5fr; /* Phân bổ không gian cho các cột */
+  gap: 25px;
+  align-items: flex-end;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.inputGroup select {
+  padding: 10px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background-color: #fcfcfc;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.inputGroup select:focus {
+  border-color: #38a169;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.1);
+}
+
+/* 4. Dropdown Xuất dữ liệu */
+.exportColumn {
+  position: relative;
+}
+
+.exportActionsInline {
+  position: relative;
+}
+
+.mainExportBtnSmall {
+  width: 100%;
+  padding: 10px 18px;
+  background: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mainExportBtnSmall:hover {
+  background: #0f172a;
+  transform: translateY(-1px);
+}
+
+.mainExportBtnSmall.active {
+  background: #38a169;
+}
+
+.dropdownContentInline {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  left: 0;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  z-index: 100;
+  border: 1px solid #e2e8f0;
+  padding: 6px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownContentInline button {
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  border: none;
+  background: none;
+  font-size: 0.85rem;
+  color: #334155;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.dropdownContentInline button:hover {
+  background-color: #f1f5f9;
+  color: #38a169;
+}
+
+/* 5. Nội dung hiển thị bảng Excel */
+.contentCard {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  min-height: 600px;
+}
+
+.tableResponsive {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #edf2f7;
+}
+
+/* Định dạng bảng HTML từ thư viện XLSX */
+.excelContent table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.excelContent th, 
+.excelContent td {
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+/* Dòng tiêu đề của file Excel */
+.excelContent tr:first-child td {
+  background-color: #f8fafc;
+  font-weight: 700;
+  color: #1e293b;
+  text-transform: uppercase;
+  text-align: center;
+  border-bottom: 2px solid #cbd5e1;
+}
+
+.excelContent tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+.excelContent tr:hover {
+  background-color: #f0fdf4; /* Màu highlight khi rê chuột vào hàng quy hoạch */
+}
+
+/* 6. Trạng thái Loading & Error */
+.loadingOverlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 0;
+  color: #64748b;
+}
+
+.spinner {
+  width: 45px;
+  height: 45px;
+  border: 4px solid #f1f5f9;
+  border-top: 4px solid #38a169;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 15px;
+}
+
+.errorMsg {
+  text-align: center;
+  padding: 60px 20px;
+  background: #fff5f5;
+  border: 1px dashed #feb2b2;
+  border-radius: 12px;
+  color: #c53030;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 7. Responsive cho màn hình nhỏ */
+@media (max-width: 1024px) {
+  .filterRowTripple {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
